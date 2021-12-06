@@ -27,14 +27,13 @@ int main()
     printf("\t1 - Tri par insertion avec permutations successives\n");
     printf("\t2 - Tri par insertion avec décalage à droite puis insertion\n");
     scanf("%d", &choixTri);
-    switch (choixTri)
+    if (choixTri == 1)
     {
-    case 1:
         tri_insertion_permutation();
-        break;
-    case 2:
+    }
+    else if(choixTri == 2)
+    {
         tri_insertion_decalage();
-        break;
     }
 }
 
