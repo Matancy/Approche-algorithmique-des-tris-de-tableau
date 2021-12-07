@@ -1,19 +1,21 @@
 #include <stdlib.h>
 #include <stdio.h>
+#define MAX 10
 
 void tri_insertion_permutation(typeTab t);
 void tri_insertion_decalage(typeTab t);
-#define MAX 10
+
 typedef int typeTab[10];
+
 int main()
 {
-    int choixOrdre; //Sert à définir l'ordre dans lequel l'utilisateur veut trier son tableau
-    int choixTri;   //Sert à définir quel tri l'utilisateur souhaite utiliser
+    int choixOrdre; // Sert à définir l'ordre dans lequel l'utilisateur veut trier son tableau
+    int choixTri;   // Sert à définir quel tri l'utilisateur souhaite utiliser
     typeTab t = {54, 50, 21, 12, 76, 23, 78, 1, 0, 56};
     printf("Dans quel ordre voulez-vous trier votre tableau:\n");
     printf("\t1 - Tri par insertion avec permutations successives\n");
     printf("\t2 - Tri par insertion avec décalage à droite puis insertion\n\n");
-    scanf("%d", choixOrdre);
+    scanf("%d", &choixOrdre);
     switch (choixOrdre)
     {
     case 1:
@@ -23,17 +25,17 @@ int main()
     default:
         break;
     }
-    printf("Indiquez le tri que vous souhaitez utiliser pour trier votre tableau (1 ou 2):\n");
+    printf("Indiquez le tri que vous souhaitez utiliser pour trier votre tableau :\n");
     printf("\t1 - Tri par insertion avec permutations successives\n");
     printf("\t2 - Tri par insertion avec décalage à droite puis insertion\n");
     scanf("%d", &choixTri);
     if (choixTri == 1)
     {
-        tri_insertion_permutation();
+        tri_insertion_permutation(t);
     }
-    else if(choixTri == 2)
+    else if (choixTri == 2)
     {
-        tri_insertion_decalage();
+        tri_insertion_decalage(t);
     }
 }
 
@@ -69,18 +71,18 @@ void tri_insertion_decalage(typeTab t)
     int conserve; //conserve la valeur t[i]
     int i;
     int j;
-    for (i=0; i < MAX; i++) //on parcours le tableau à trier
+    for (i = 0; i < MAX; i++) //on parcours le tableau à trier
     {
         j = i;
         conserve = t[i];
         do
         {
-            if(conserve < t[j])
+            if (conserve < t[j])
             {
                 t[i] = t[j]; //on met la valeur t[j] dans l'espace libéré
-            } 
+            }
             j--;
-        }while((t[j] > conserve) && (j >= 0));
+        } while ((t[j] > conserve) && (j >= 0));
         t[j] = conserve;
     }
 }
