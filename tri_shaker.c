@@ -7,6 +7,16 @@ void tri_shaker(tableau);
 void inversion(tableau, int, int);
 void afficher(tableau);
 
+int main()
+{
+    tableau t = {12, 45, 2, 4, 23, 90};
+    printf("Tableau initial : \n");
+    afficher(t);
+    tri_shaker(t);
+    printf("Tableau trié : \n");
+    afficher(t);
+    return EXIT_SUCCESS;
+}
 // Inversion de deux valeurs
 void inversion(tableau tab, int val1, int val2)
 {
