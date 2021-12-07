@@ -36,6 +36,14 @@ void tri_shaker(tableau tab)
                 // Si la première valeur est plus grande, on inverse les deux
                 inversion(tab, count, count + 1);
             }
+            // Incrémentation du compteur
+            count = count + 1;
+        }
+        // Partie décroissante
+        else
+        {
+            // Décrémentation du compteur
+            count = count - 1;
         }
 
         // Inversion en fonction de l'avancée du tri
