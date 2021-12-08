@@ -9,17 +9,38 @@ void afficher(tableau);
 
 int main()
 {
-    tableau t = {12, 45, 2, 4, 23, 90, 65, 45, 99, 19};
+    tableau favorable = {1, 3, 5, 6, 8, 9, 12, 34, 56, 78};
+    tableau nonfavorable = {78, 56, 34, 12, 9, 8, 6, 5, 3, 1};
+    tableau normal = {12, 45, 2, 4, 23, 90, 65, 45, 99, 19};
     int ordre; // Ordre croissant 0 ou décroissant 1
     printf("Entrez l'ordre de tri : \n");
     printf("\t 0 - Croissant \n");
     printf("\t 1 - Decroissant \n");
     scanf("%d", &ordre);
-    printf("Tableau initial : \n");
-    afficher(t);
-    tri_shaker(t, ordre);
+
+    // Tri favorable
+    printf("Tableau initial favorable : \n");
+    afficher(favorable);
+    tri_shaker(favorable, ordre);
     printf("Tableau trie : \n");
-    afficher(t);
+    afficher(favorable);
+    printf("\n\n");
+
+    // Tri non favorable
+    printf("Tableau initial non favorable : \n");
+    afficher(nonfavorable);
+    tri_shaker(nonfavorable, ordre);
+    printf("Tableau trie : \n");
+    afficher(nonfavorable);
+    printf("\n\n");
+
+    // Tri normal
+    printf("Tableau initial normal : \n");
+    afficher(normal);
+    tri_shaker(normal, ordre);
+    printf("Tableau trie : \n");
+    afficher(normal);
+    printf("\n\n");
     return EXIT_SUCCESS;
 }
 
