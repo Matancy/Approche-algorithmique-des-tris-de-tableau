@@ -35,7 +35,7 @@ int main()
     printf("\n\n");
 
     // Tri normal
-    printf("Tableau initial normal : \n");
+    printf("Tableau initial moyen : \n");
     afficher(normal);
     tri_shaker(normal, ordre);
     printf("Tableau trie : \n");
