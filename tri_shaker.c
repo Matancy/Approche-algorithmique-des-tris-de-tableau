@@ -3,22 +3,27 @@
 #define N 10
 
 typedef int tableau[N];
-void tri_shaker(tableau);
+void tri_shaker(tableau, int);
 void inversion(tableau, int, int);
 void afficher(tableau);
 
 int main()
 {
     tableau t = {12, 45, 2, 4, 23, 90, 65, 45, 99, 19};
+    int ordre; // Ordre croissant 0 ou décroissant 1
+    printf("Entrez l'ordre de tri : \n");
+    printf("\t 0 - Croissant \n");
+    printf("\t 1 - Decroissant \n");
+    scanf("%d", &ordre);
     printf("Tableau initial : \n");
     afficher(t);
-    tri_shaker(t);
-    printf("Tableau trié : \n");
+    tri_shaker(t, ordre);
+    printf("Tableau trie : \n");
     afficher(t);
     return EXIT_SUCCESS;
 }
 
-void tri_shaker(tableau tab)
+void tri_shaker(tableau tab, int ordre_des_donnees)
 {
     int indMin, indMax, count, order;
     indMin = 0;     // Indice du min trié dans le tableau
@@ -31,10 +36,17 @@ void tri_shaker(tableau tab)
         // Partie croissante
         if (order == 0)
         {
-            if (tab[count] > tab[count + 1])
+            // Tri croissant
+            if ((ordre_des_donnees == 0) && (tab[count] > tab[count + 1]))
             {
                 // Si la première valeur est plus grande, on inverse les deux
                 inversion(tab, count, count + 1);
+            }
+            // Tri décroissant
+            else if ((ordre_des_donnees == 1) && (tab[count] < tab[count + 1]))
+            {
+                // Si la première valeur est plus petite, on inverse les deux
+                inversion(tab, count + 1, count);
             }
             // Incrémentation du compteur
             count = count + 1;
@@ -42,10 +54,15 @@ void tri_shaker(tableau tab)
         // Partie décroissante
         else
         {
-            if (tab[count - 1] > tab[count])
+            if ((ordre_des_donnees == 0) && (tab[count - 1] > tab[count]))
             {
                 // Si la valeur en dessous est plus grande, on inverse les deux
-                inversion(tab, count- 1, count);
+                inversion(tab, count - 1, count);
+            }
+            else if ((ordre_des_donnees == 1) && (tab[count - 1]) < tab[count])
+            {
+                // Si la valeur en dessous est plus petite, on inverse les deux
+                inversion(tab, count, count - 1);
             }
             // Décrémentation du compteur
             count = count - 1;
