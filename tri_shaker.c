@@ -9,7 +9,7 @@ void afficher(tableau);
 
 int main()
 {
-    tableau t = {12, 45, 2, 4, 23, 90};
+    tableau t = {12, 45, 2, 4, 23, 90, 65, 45, 99, 19};
     printf("Tableau initial : \n");
     afficher(t);
     tri_shaker(t);
@@ -42,23 +42,33 @@ void tri_shaker(tableau tab)
         // Partie décroissante
         else
         {
+            if (tab[count - 1] > tab[count])
+            {
+                // Si la valeur en dessous est plus grande, on inverse les deux
+                inversion(tab, count- 1, count);
+            }
             // Décrémentation du compteur
             count = count - 1;
         }
 
         // Inversion en fonction de l'avancée du tri
-        if (count == (N - 1) || count == 1)
+        if ((count == indMax) || (count == indMin))
         {
             // Inversion du mode d'évolution
             if (order == 0)
             {
-                order = 1; // Passage en évolution décroissante
+                order = 1;           // Passage en évolution décroissante
+                indMax = indMax - 1; // Décrémentation de l'indice maximum
+                count = count - 1;
             }
             else
             {
-                order = 0; // Passage en évolution croissante
+                order = 0;           // Passage en évolution croissante
+                indMin = indMin + 1; // Incrémentation de l'indice minimum
+                count = count + 1;
             }
         }
+        //printf("Min : %d \t Max : %d \t Count : %d \t order : %d \n", indMin, indMax, count, order);
     }
 }
 
@@ -78,4 +88,5 @@ void afficher(tableau tab)
     {
         printf("%d ", tab[i]);
     }
+    printf("\n");
 }
