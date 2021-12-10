@@ -11,7 +11,7 @@ int main()
 }
 
 //procedure de tri fusion:
-void tri_fusion(typeTab tablo)
+void tri_fusion(typeTab tablo, int deb, int fin, int millieu)
 {
     typeTab autreTablo;
     int i, j;        //compteurs pour les deux tableaux
@@ -22,12 +22,32 @@ void tri_fusion(typeTab tablo)
     int nbrElements; //Nombre d'éléments d'un tableau
     deb = 0;
     fin = MAX - 1;
-    while (!estTrie)
+    millieu = (deb + fin)/2;
+    if ((fin - deb) == 2)
     {
-        if (deb < fin)
+        if (t[i] < t[i-1])
         {
-            
+            echange(autreTablo, i);
         }
     }
+    else
+    {
+        tri_fusion(autreTablo, deb, fin, millieu);
+    }
+}
+
+//tri récursif d'un tableau
+void tri_recursif(typeTab t)
+{
+
+}
+
+//echange de deux valeurs:
+void echange(typeTab t, int i)
+{
+    int temp; //variable temporaire de stockage
+    temp = t[i-1];
+    t[i-1] = t[i];
+    t[i] = temp;
 }
 
