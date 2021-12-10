@@ -26,17 +26,20 @@ int main()
 // Tri fusion
 void tri_fusion(tableau tab, tableau tab_fin, int min, int max)
 {
-    if (min != 2 && max != 0)
-    {
     printf("min : %d \t max : %d\n", min, max);
+    afficher(tab_fin);
+
+    if (max == 2)
+    {
+        
     }
-    if (max - min == 1)
+    if (max - min <= 1)
     {
         remplir(tab, tab_fin, min, max);
     }
     else
     {
-        tri_fusion(tab, tab_fin, min, max / 2);
+        tri_fusion(tab, tab_fin, min, (max / 2) - 1);
         tri_fusion(tab, tab_fin, max / 2, max);
     }
 }
