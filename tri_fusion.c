@@ -1,24 +1,30 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
-#define MAX 10
+#define TAB_MAX 50
+#include <time.h>
 
-typedef int tableau[MAX];
+typedef int tableau[TAB_MAX];
 
 void tri_fusion(tableau, tableau, int, int);
 void remplir(tableau, tableau, int, int);
 void afficher(tableau);
+void creationTableauAlea(tableau, int);
 
 int main()
 {
-    tableau tablo = {98, 67, 54, 23, 56, 18, 99, 0, 67, 78};
+    srand(time(NULL)); // Définition pour la fonction aléatoire
+    // tableau tablo = {98, 67, 54, 23, 56, 18, 99, 0, 67, 78};
+    tableau tab;
     tableau tab_fin = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    // tableau tab_fin;
 
-    printf("Tableau normal : \n");
-    afficher(tablo);
-    printf("Tableau trié : \n");
-    tri_fusion(tablo, tab_fin, 0, MAX);
-    afficher(tab_fin);
+    creationTableauAlea(tab, TAB_MAX);
+    // printf("Tableau normal : \n");
+    // afficher(tab);
+    // printf("Tableau trié : \n");
+    tri_fusion(tab, tab_fin, 0, TAB_MAX);
+    // afficher(tab_fin);
 
     return EXIT_SUCCESS;
 }
@@ -26,12 +32,10 @@ int main()
 // Tri fusion
 void tri_fusion(tableau tab, tableau tab_fin, int min, int max)
 {
-    printf("min : %d \t max : %d\n", min, max);
-    afficher(tab_fin);
+    // afficher(tab_fin);
 
     if (max == 2)
     {
-        
     }
     if (max - min <= 1)
     {
@@ -40,6 +44,7 @@ void tri_fusion(tableau tab, tableau tab_fin, int min, int max)
     else
     {
         tri_fusion(tab, tab_fin, min, (max / 2) - 1);
+        printf("min : %d \t max : %d\n", min, max);
         tri_fusion(tab, tab_fin, max / 2, max);
     }
 }
@@ -59,7 +64,7 @@ void remplir(tableau tab_init, tableau tab_fin, int min, int max)
         tab_init[min] = tab_init[max];
         tab_init[max] = tmp;
     }
-    for (int i = 0; i < MAX; i++)
+    for (int i = 0; i < TAB_MAX; i++)
     {
         // Si la zone est vide
         if (tab_fin[i] == 0)
@@ -79,15 +84,29 @@ void remplir(tableau tab_init, tableau tab_fin, int min, int max)
             }
         }
     }
-    afficher(tab_fin);
+    // afficher(tab_fin);
 }
 
 // Affichage d'un tableau
 void afficher(tableau tab)
 {
-    for (int i = 0; i < MAX; i++)
+    for (int i = 0; i < TAB_MAX; i++)
     {
         printf("%d ", tab[i]);
     }
     printf("\n");
+}
+
+// Fonction de remplissage aléatoire
+void creationTableauAlea(tableau tab, int taille)
+{
+    for (int i = 0; i < taille; i++)
+    {
+        int nb;
+        do
+        {
+            nb = rand() % 10 * RAND_MAX;
+        } while (nb == 0);
+        tab[i] = nb;
+    }
 }
