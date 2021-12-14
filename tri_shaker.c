@@ -1,46 +1,54 @@
 #include <stdlib.h>
 #include <stdio.h>
-#define N 10
+#include <time.h>
+#define TAB_MAX 100000
 
-typedef int tableau[N];
+typedef int tableau[TAB_MAX];
 void tri_shaker(tableau, int);
 void inversion(tableau, int, int);
 void afficher(tableau);
+void creationTableauAlea(tableau, int);
 
 int main()
 {
-    tableau favorable = {1, 3, 5, 6, 8, 9, 12, 34, 56, 78};
-    tableau nonfavorable = {78, 56, 34, 12, 9, 8, 6, 5, 3, 1};
-    tableau normal = {12, 45, 2, 4, 23, 90, 65, 45, 99, 19};
+    srand(time(NULL)); // Définition pour la fonction aléatoire
+    // tableau favorable = {1, 3, 5, 6, 8, 9, 12, 34, 56, 78};
+    // tableau nonfavorable = {78, 56, 34, 12, 9, 8, 6, 5, 3, 1};
+    // tableau normal = {12, 45, 2, 4, 23, 90, 65, 45, 99, 19};
     int ordre; // Ordre croissant 0 ou décroissant 1
+    tableau tab;
     printf("Entrez l'ordre de tri : \n");
     printf("\t 0 - Croissant \n");
     printf("\t 1 - Decroissant \n");
     scanf("%d", &ordre);
 
+    creationTableauAlea(tab, TAB_MAX);
+    tri_shaker(tab, ordre);
+    afficher(tab);
+
     // Tri favorable
-    printf("Tableau initial favorable : \n");
-    afficher(favorable);
-    tri_shaker(favorable, ordre);
-    printf("Tableau trie : \n");
-    afficher(favorable);
-    printf("\n\n");
+    // printf("Tableau initial favorable : \n");
+    // afficher(favorable);
+    // tri_shaker(favorable, ordre);
+    // printf("Tableau trie : \n");
+    // afficher(favorable);
+    // printf("\n\n");
 
-    // Tri non favorable
-    printf("Tableau initial non favorable : \n");
-    afficher(nonfavorable);
-    tri_shaker(nonfavorable, ordre);
-    printf("Tableau trie : \n");
-    afficher(nonfavorable);
-    printf("\n\n");
+    // // Tri non favorable
+    // printf("Tableau initial non favorable : \n");
+    // afficher(nonfavorable);
+    // tri_shaker(nonfavorable, ordre);
+    // printf("Tableau trie : \n");
+    // afficher(nonfavorable);
+    // printf("\n\n");
 
-    // Tri normal
-    printf("Tableau initial normal : \n");
-    afficher(normal);
-    tri_shaker(normal, ordre);
-    printf("Tableau trie : \n");
-    afficher(normal);
-    printf("\n\n");
+    // // Tri normal
+    // printf("Tableau initial normal : \n");
+    // afficher(normal);
+    // tri_shaker(normal, ordre);
+    // printf("Tableau trie : \n");
+    // afficher(normal);
+    // printf("\n\n");
     return EXIT_SUCCESS;
 }
 
@@ -48,7 +56,7 @@ void tri_shaker(tableau tab, int ordre_des_donnees)
 {
     int indMin, indMax, count, order;
     indMin = 0;     // Indice du min trié dans le tableau
-    indMax = N - 1; // Indice du max trié dans le tableau
+    indMax = TAB_MAX - 1; // Indice du max trié dans le tableau
     count = 0;      // Compteur
     order = 0;      // 0 => Evolution croissante, 1 => Evolution décroissante
 
@@ -122,9 +130,23 @@ void inversion(tableau tab, int val1, int val2)
 // Affichage du tableau
 void afficher(tableau tab)
 {
-    for (int i = 0; i < N; i++)
+    for (int i = 0; i < TAB_MAX; i++)
     {
         printf("%d ", tab[i]);
     }
     printf("\n");
+}
+
+// Fonction de remplissage aléatoire
+void creationTableauAlea(tableau tab, int taille)
+{
+    for (int i = 0; i < taille; i++)
+    {
+        int nb;
+        do
+        {
+            nb = rand() % RAND_MAX;
+        } while (nb == 0);
+        tab[i] = nb;
+    }
 }

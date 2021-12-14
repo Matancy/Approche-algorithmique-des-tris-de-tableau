@@ -1,45 +1,51 @@
 #include <stdlib.h>
 #include <stdio.h>
-#define MAX 10
+#define TAB_MAX 100000
 
-typedef int tableau[MAX];
+typedef int tableau[TAB_MAX];
 
 void tri_insertion(tableau, int);
 void afficher(tableau);
+void creationTableauAlea(tableau, int);
 
 int main()
 {
-    tableau favorable = {1, 3, 5, 6, 8, 9, 12, 34, 56, 78};
-    tableau nonfavorable = {78, 56, 34, 12, 9, 8, 6, 5, 3, 1};
-    tableau normal = {12, 45, 2, 4, 23, 90, 65, 45, 99, 19};
+    // tableau favorable = {1, 3, 5, 6, 8, 9, 12, 34, 56, 78};
+    // tableau nonfavorable = {78, 56, 34, 12, 9, 8, 6, 5, 3, 1};
+    // tableau normal = {12, 45, 2, 4, 23, 90, 65, 45, 99, 19};
+    tableau tab;
 
-    int choixOrdre; // Croissant : 0, Décroissant : 1
+    int ordre; // Croissant : 0, Décroissant : 1
 
     printf("Entrez l'ordre de tri :\n");
     printf("\t0 - Croissant\n");
     printf("\t1 - Decroissant\n\n");
-    scanf("%d", &choixOrdre);
+    scanf("%d", &ordre);
 
-    printf("Tableau favorable :\n");
-    afficher(favorable);
-    tri_insertion(favorable, choixOrdre);
-    printf("Tableau trie :\n");
-    afficher(favorable);
-    printf("\n\n");
+    creationTableauAlea(tab, TAB_MAX);
+    tri_insertion(tab, ordre);
+    afficher(tab);
 
-    printf("Tableau non favorable :\n");
-    afficher(nonfavorable);
-    tri_insertion(nonfavorable, choixOrdre);
-    printf("Tableau trie :\n");
-    afficher(nonfavorable);
-    printf("\n\n");
+    // printf("Tableau favorable :\n");
+    // afficher(favorable);
+    // tri_insertion(favorable, ordre);
+    // printf("Tableau trie :\n");
+    // afficher(favorable);
+    // printf("\n\n");
 
-    printf("Tableau normal :\n");
-    afficher(normal);
-    tri_insertion(normal, choixOrdre);
-    printf("Tableau trie :\n");
-    afficher(normal);
-    printf("\n\n");
+    // printf("Tableau non favorable :\n");
+    // afficher(nonfavorable);
+    // tri_insertion(nonfavorable, ordre);
+    // printf("Tableau trie :\n");
+    // afficher(nonfavorable);
+    // printf("\n\n");
+
+    // printf("Tableau normal :\n");
+    // afficher(normal);
+    // tri_insertion(normal, ordre);
+    // printf("Tableau trie :\n");
+    // afficher(normal);
+    // printf("\n\n");
 
     return EXIT_SUCCESS;
 }
@@ -50,7 +56,7 @@ void tri_insertion(tableau t, int ordre)
     int i;
     int j;
     int temp; //variable temporaire pour faire un échange
-    for (i = 1; i < MAX; i++)
+    for (i = 1; i < TAB_MAX; i++)
     {
         j = i;
         // Ordre croissant
@@ -81,10 +87,23 @@ void tri_insertion(tableau t, int ordre)
 // Affichage d'un tableau
 void afficher(tableau tab)
 {
-    for (int i = 0; i < MAX; i++)
+    for (int i = 0; i < TAB_MAX; i++)
     {
         printf("%d ", tab[i]);
     }
     printf("\n");
 }
 
+// Fonction de remplissage aléatoire
+void creationTableauAlea(tableau tab, int taille)
+{
+    for (int i = 0; i < taille; i++)
+    {
+        int nb;
+        do
+        {
+            nb = rand() % RAND_MAX;
+        } while (nb == 0);
+        tab[i] = nb;
+    }
+}
