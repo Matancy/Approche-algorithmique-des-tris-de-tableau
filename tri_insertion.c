@@ -87,3 +87,4 @@ void afficher(tableau tab)
     }
     printf("\n");
 }
+
