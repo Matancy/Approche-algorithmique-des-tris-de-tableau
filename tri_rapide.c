@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
-#define TAB_MAX 10
+#define TAB_MAX 20
 
 typedef int tableau[TAB_MAX];
 
@@ -25,7 +25,10 @@ int main()
     scanf("%d", &ordre);
 
     creationTableauAlea(tab, TAB_MAX);
+    printf("Tableau intial : \n");
+    afficher(tab);
     tri_rapide(tab, 0, TAB_MAX, ordre);
+    printf("Tableau trie : \n");
     afficher(tab);
 
     // printf("Tableau normal : \n");

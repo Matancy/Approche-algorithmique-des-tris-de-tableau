@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
-#define TAB_MAX 100000
+#define TAB_MAX 20
 
 typedef int tableau[TAB_MAX];
 void tri_shaker(tableau, int);
@@ -23,7 +23,10 @@ int main()
     scanf("%d", &ordre);
 
     creationTableauAlea(tab, TAB_MAX);
+    printf("Tableau initial : \n");
+    afficher(tab);
     tri_shaker(tab, ordre);
+    printf("Tableau trie : \n");
     afficher(tab);
 
     // Tri favorable
@@ -55,10 +58,10 @@ int main()
 void tri_shaker(tableau tab, int ordre_des_donnees)
 {
     int indMin, indMax, count, order;
-    indMin = 0;     // Indice du min trié dans le tableau
+    indMin = 0;           // Indice du min trié dans le tableau
     indMax = TAB_MAX - 1; // Indice du max trié dans le tableau
-    count = 0;      // Compteur
-    order = 0;      // 0 => Evolution croissante, 1 => Evolution décroissante
+    count = 0;            // Compteur
+    order = 0;            // 0 => Evolution croissante, 1 => Evolution décroissante
 
     while ((indMax - indMin) != 0) // Tant que l'écart entre le minimum et le max est différent de 0 (soit tableau trié)
     {
