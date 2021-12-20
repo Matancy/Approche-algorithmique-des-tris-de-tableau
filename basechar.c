@@ -1,7 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#define TAB_MAX 20
+#include <time.h>
+#define TAB_MAX 50
 
 typedef int tableau[TAB_MAX];
 typedef char tableauchar[TAB_MAX];
@@ -11,7 +12,26 @@ void creationTableauAlea(tableau);
 void convertToChar(tableau, tableauchar);
 void afficherInt(tableau);
 void afficherChar(tableauchar);
+void afficherString(tableaustring);
 void concatenateChar(tableauchar, tableaustring);
+void init(tableaustring);
+
+int main()
+{
+    srand(time(NULL)); // Définition pour la fonction aléatoire
+
+    tableau tab;
+    tableauchar tabchar;
+    tableaustring tabstring;
+    creationTableauAlea(tab);
+    convertToChar(tab, tabchar);
+    afficherInt(tab);
+    afficherChar(tabchar);
+    init(tabstring);
+    concatenateChar(tabchar, tabstring);
+    afficherString(tabstring);
+    return EXIT_SUCCESS;
+}
 
 void creationTableauAlea(tableau tab)
 {
@@ -55,7 +75,6 @@ void afficherString(tableaustring tab)
         printf("%s", tab[i]);
         printf("\n");
     }
-    printf("\n");
 }
 void concatenateChar(tableauchar tabchar, tableaustring tabstring)
 {
@@ -72,24 +91,29 @@ void concatenateChar(tableauchar tabchar, tableaustring tabstring)
         {
             nb = rand() % 10;
         } while (nb < 5);
-        for (j = pointeur; j < pointeur + nb; j++)
+
+        if ((pointeur + nb) > TAB_MAX)
         {
-            tabstring[count][strlen(tabstring[count])] = tabchar[j];
+            for (int j = pointeur; j < (TAB_MAX - pointeur); j++)
+            {
+                strncat(tabstring[count], &tabchar[j], 1);
+            }
         }
+        else
+        {
+            for (j = pointeur; j < (pointeur + nb); j++)
+            {
+                strncat(tabstring[count], &tabchar[j], 1);
+            }
+        }
+        pointeur = pointeur + nb;
         count = count + 1;
     }
 }
-
-int main()
+void init(tableaustring tabstring)
 {
-    tableau tab;
-    tableauchar tabchar;
-    tableaustring tabstring;
-    creationTableauAlea(tab);
-    convertToChar(tab, tabchar);
-    afficherInt(tab);
-    afficherChar(tabchar);
-    concatenateChar(tabchar, tabstring);
-    afficherString(tabstring);
-    return EXIT_SUCCESS;
+    for (int i = 0; i < TAB_MAX; i++)
+    {
+        strcpy(tabstring[i], "          ");
+    }
 }
