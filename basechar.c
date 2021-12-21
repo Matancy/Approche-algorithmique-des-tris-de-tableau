@@ -3,7 +3,7 @@
 #include <string.h>
 #include <time.h>
 #define TAB_MAX 1000
-#define TAB_STRING 100
+#define TAB_STRING 200
 
 typedef int tableau[TAB_MAX];
 typedef char tableauchar[TAB_MAX];
@@ -73,8 +73,11 @@ void afficherString(tableaustring tab)
 {
     for (int i = 0; i < TAB_STRING; i++)
     {
-        printf("%s", tab[i]);
-        printf("\n");
+        if (strcmp(tab[i], "          ") != 0)
+        {
+            printf("%s", tab[i]);
+            printf("\n");
+        }
     }
 }
 void concatenateChar(tableauchar tabchar, tableaustring tabstring)
