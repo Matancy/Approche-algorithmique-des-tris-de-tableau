@@ -101,7 +101,7 @@ void concatenateChar(tableauchar tabchar, tableaustring tabstring)
         ind = 0;
         if ((pointeur + nb) > TAB_MAX)
         {
-            for (int j = pointeur; j < (TAB_MAX - pointeur); j++)
+            for (int j = pointeur; j < (TAB_MAX); j++)
             {
                 tabstring[count][ind] = tabchar[j];
                 ind = ind + 1;
