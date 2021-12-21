@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <time.h>
 #define TAB_MAX 1000
 #define TAB_STRING 200
 
@@ -26,6 +27,8 @@ int main()
     tableaustring tabstring;
 
     int ordre; // Croissant : 0, Décroissant : 1
+
+    srand(time(NULL)); // Définition pour la fonction aléatoire
 
     printf("Entrez l'ordre de tri :\n");
     printf("\t0 - Croissant\n");
