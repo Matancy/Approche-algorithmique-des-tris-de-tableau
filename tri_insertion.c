@@ -9,7 +9,7 @@ typedef int tableau[TAB_MAX];
 typedef char tableauchar[TAB_MAX];
 typedef char tableaustring[TAB_STRING][11];
 
-void tri_insertion(tableauchar, int);
+void tri_insertion(tableaustring, int);
 void afficher(tableau);
 void creationTableauAlea(tableau tab);
 void init(tableaustring tabstring);
@@ -70,7 +70,7 @@ int main()
 }
 
 // Tri par insertion des tableaux
-void tri_insertion(tableauchar t, int ordre)
+void tri_insertion(tableaustring t, int ordre)
 {
     int i;
     int j;
@@ -79,14 +79,13 @@ void tri_insertion(tableauchar t, int ordre)
     {
         j = i;
         // Ordre croissant
-        if ((ordre == 0) && (strcmp(t[i], t[i - 1] == -1)))
+        if ((ordre == 0) && (strcmp(t[i], t[i - 1]) == -1))
         {
-            while ((strcmp(t[i], t[i - 1] == -1)) && (j != 0))
+            while ((strcmp(t[i], t[i - 1]) == -1) && (j != 0))
             {
                 strcpy(temp, t[j - 1]);
                 strcpy(t[j - 1], t[j]);
                 strcpy(t[j], temp);
-                strcpy(j, j - 1);
             }
         }
         // Ordre décroissant
