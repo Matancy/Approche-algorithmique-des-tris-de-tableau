@@ -1,9 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include<string.h>
+#include <string.h>
 #define TAB_MAX 1000
 #define TAB_STRING 200
-
 
 typedef int tableau[TAB_MAX];
 typedef char tableauchar[TAB_MAX];
@@ -16,9 +15,6 @@ void init(tableaustring tabstring);
 void convertToChar(tableau tab, tableauchar tabchar);
 void afficherString(tableaustring tab);
 void concatenateChar(tableauchar tabchar, tableaustring tabstring);
-
-
-
 
 int main()
 {
@@ -36,9 +32,10 @@ int main()
     printf("\t1 - Decroissant\n\n");
     scanf("%d", &ordre);
 
-    creationTableauAlea(tab); //création d'un tableau d'entiers 
-    convertToChar(tab, tabchar); //Création d'un tableau de carractères compris entre a et z, à partir du tableu d'entiers
-    concatenateChar(tabchar, tabstring); //création d'un tableau de chaînes de carractères 
+    init(tabstring);                     // Initialisation d'un tableau de chaînes de caractères
+    creationTableauAlea(tab);            //création d'un tableau d'entiers
+    convertToChar(tab, tabchar);         //Création d'un tableau de carractères compris entre a et z, à partir du tableu d'entiers
+    concatenateChar(tabchar, tabstring); //création d'un tableau de chaînes de carractères
     printf("Tableau initial : \n");
     afficherString(tabstring);
     tri_insertion(tabstring, ordre);
@@ -75,8 +72,9 @@ void tri_insertion(tableaustring t, int ordre)
     int i;
     int j;
     char temp[11]; //variable temporaire pour faire un échange
-    for (i = 1; i < TAB_MAX; i++)
+    for (i = 1; i < TAB_STRING; i++)
     {
+        printf("%s, %s, %d \n", t[i-1], t[i], i);
         j = i;
         // Ordre croissant
         if ((ordre == 0) && (strcmp(t[i], t[i - 1]) == -1))
@@ -115,7 +113,6 @@ void afficherString(tableaustring tab)
     }
 }
 
-
 // Fonction de remplissage aléatoire
 void creationTableauAlea(tableau tab)
 {
@@ -137,7 +134,6 @@ void convertToChar(tableau tab, tableauchar tabchar)
         tabchar[i] = tab[i];
     }
 }
-
 
 void concatenateChar(tableauchar tabchar, tableaustring tabstring)
 {
