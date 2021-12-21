@@ -2,8 +2,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
-#define TAB_MAX 50
-#define TAB_STRING 50
+#define TAB_MAX 1000
+#define TAB_STRING 100
 
 typedef int tableau[TAB_MAX];
 typedef char tableauchar[TAB_MAX];
@@ -71,7 +71,7 @@ void afficherChar(tableauchar tab)
 }
 void afficherString(tableaustring tab)
 {
-    for (int i = 0; i < TAB_MAX; i++)
+    for (int i = 0; i < TAB_STRING; i++)
     {
         printf("%s", tab[i]);
         printf("\n");
