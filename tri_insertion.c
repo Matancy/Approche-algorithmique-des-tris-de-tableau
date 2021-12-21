@@ -9,13 +9,13 @@ typedef int tableau[TAB_MAX];
 typedef char tableauchar[TAB_MAX];
 typedef char tableaustring[TAB_STRING][11];
 
-void tri_insertion(tableaustring, int);
 void afficher(tableau);
 void creationTableauAlea(tableau tab);
 void init(tableaustring tabstring);
 void convertToChar(tableau tab, tableauchar tabchar);
 void afficherString(tableaustring tab);
 void concatenateChar(tableauchar tabchar, tableaustring tabstring);
+void tri_insertion(tableaustring, int);
 
 int main()
 {
@@ -26,7 +26,7 @@ int main()
     tableauchar tabchar;
     tableaustring tabstring;
 
-    int ordre; // Croissant : 0, Décroissant : 1
+    int ordre; // Croissant : 0; Décroissant : 1
 
     srand(time(NULL)); // Définition pour la fonction aléatoire
 
@@ -36,9 +36,9 @@ int main()
     scanf("%d", &ordre);
 
     init(tabstring);                     // Initialisation d'un tableau de chaînes de caractères
-    creationTableauAlea(tab);            //création d'un tableau d'entiers
-    convertToChar(tab, tabchar);         //Création d'un tableau de carractères compris entre a et z, à partir du tableu d'entiers
-    concatenateChar(tabchar, tabstring); //création d'un tableau de chaînes de carractères
+    creationTableauAlea(tab);            // Création d'un tableau d'entiers
+    convertToChar(tab, tabchar);         // Création d'un tableau de carractères compris entre a et z, à partir du tableu d'entiers
+    concatenateChar(tabchar, tabstring); // Création d'un tableau de chaînes de carractères
     printf("Tableau initial : \n");
     afficherString(tabstring);
     tri_insertion(tabstring, ordre);
@@ -72,21 +72,23 @@ int main()
 // Tri par insertion des tableaux
 void tri_insertion(tableaustring t, int ordre)
 {
+    int comparaison; // Négatif quand le premier élément du strcmp est supérieur au second, positif dans le cas inverse et nul sinon
     int i;
     int j;
-    char temp[11]; //variable temporaire pour faire un échange
+    char temp[11]; // Variable temporaire pour faire un échange
     for (i = 1; i < TAB_STRING; i++)
     {
-        printf("%s, %s, %d \n", t[i-1], t[i], i);
         j = i;
         // Ordre croissant
-        if ((ordre == 0) && (strcmp(t[i], t[i - 1]) == -1))
+        comparaison = strcmp(t[i], t[i - 1]);
+        if ((ordre == 0) && (comparaison < 0))
         {
-            while ((strcmp(t[i], t[i - 1]) == -1) && (j != 0))
+            while ((comparaison < 0) && (j != 0))
             {
                 strcpy(temp, t[j - 1]);
                 strcpy(t[j - 1], t[j]);
                 strcpy(t[j], temp);
+                comparaison = strcmp(t[i], t[i - 1]);
             }
         }
         // Ordre décroissant
@@ -103,7 +105,7 @@ void tri_insertion(tableaustring t, int ordre)
     }
 }
 
-//Affichage d'un tableau de chaînes de carractères
+// Affichage d'un tableau de chaînes de carractères
 void afficherString(tableaustring tab)
 {
     for (int i = 0; i < TAB_STRING; i++)
@@ -178,7 +180,7 @@ void concatenateChar(tableauchar tabchar, tableaustring tabstring)
     }
 }
 
-//fonction pour remplir les cases vides d'un tableau par des espaces
+// Fonction pour remplir les cases vides d'un tableau par des espaces
 void init(tableaustring tabstring)
 {
     for (int i = 0; i < TAB_STRING; i++)
