@@ -14,17 +14,17 @@ void creationTableauAlea(tableau, int);
 int main()
 {
     srand(time(NULL)); // Définition pour la fonction aléatoire
-    // tableau tablo = {98, 67, 54, 23, 56, 18, 99, 0, 67, 78};
+    tableau tablo;
     tableau tab;
-    tableau tab_fin = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-    // tableau tab_fin;
+    //tableau tab_fin = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    tableau tab_fin;
 
     creationTableauAlea(tab, TAB_MAX);
-    // printf("Tableau normal : \n");
-    // afficher(tab);
-    // printf("Tableau trié : \n");
+    printf("Tableau normal : \n");
+    afficher(tab);
+    printf("Tableau trié : \n");
     tri_fusion(tab, tab_fin, 0, TAB_MAX);
-    // afficher(tab_fin);
+    afficher(tab_fin);
 
     return EXIT_SUCCESS;
 }
@@ -32,7 +32,7 @@ int main()
 // Tri fusion
 void tri_fusion(tableau tab, tableau tab_fin, int min, int max)
 {
-    // afficher(tab_fin);
+    afficher(tab_fin);
 
     if (max == 2)
     {
@@ -74,17 +74,17 @@ void remplir(tableau tab_init, tableau tab_fin, int min, int max)
             {
                 // Ajout du minimum en premier
                 tab_fin[i] = tab_init[min];
-                count += 1;
+                count = count + 1;
             }
             else if (count == 1)
             {
                 // Ajout du maximum en second
                 tab_fin[i] = tab_init[max];
-                count += 1;
+                count = count + 1;
             }
         }
     }
-    // afficher(tab_fin);
+    afficher(tab_fin);
 }
 
 // Affichage d'un tableau
@@ -105,7 +105,7 @@ void creationTableauAlea(tableau tab, int taille)
         int nb;
         do
         {
-            nb = rand() % 10 * RAND_MAX;
+            nb = rand() % RAND_MAX;
         } while (nb == 0);
         tab[i] = nb;
     }

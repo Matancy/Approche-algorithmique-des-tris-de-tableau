@@ -3,86 +3,85 @@
 #include <stdbool.h>
 #include <time.h>
 
-#define TAB_MAX 500000
+#define TAB_MAX 50
 
 typedef int tableau[TAB_MAX];
 
 void remplirAlea(tableau t);
 void afficherTableau(tableau t);
-void tri_fusion(tableau t, int deb, int fin, int millieu);
+void tri_fusion(tableau t, int deb, int fin);
 void echange(tableau t);
-void fusionner(tableau t, tableau u, int deb, int fin, int millieu);
+void fusionner(tableau t, int deb, int fin, int millieu);
 
 int main()
 {
     int deb;
     int fin;
     int millieu;
-    tableau t;
+    deb = 0;
+    fin = TAB_MAX - 1;
+    tableau t; //tableau principal
     remplirAlea(t);
-    printf("Tableau initial:n");
+    printf("Tableau initial");
     afficherTableau(t);
-    tri_fusion(t, deb, fin, millieu);
+    tri_fusion(t, deb, fin);
+    printf("\n\n");
     printf("tableau final:\n");
+    afficherTableau(t);
     return EXIT_SUCCESS;
 }
 
 //tri fusion
-//pour le tri fusion, pour diviser, il faut prendre fin = millieu + 1 ou deb = millieu - 1, peu importe. On a pas besion de savoir où est-ce que l'on est dans la procédure de découpage 
-void tri_fusion(tableau t, int deb, int fin, int millieu)
+//pour le tri fusion, pour diviser, il faut prendre fin = millieu + 1 ou deb = millieu - 1, peu importe. On a pas besion de savoir où est-ce que l'on est dans la procédure de découpage
+void tri_fusion(tableau t, int deb, int fin)
 {
-    tableau t; //tableau principal
-    tableau u; //tableau pour faire l'échange
-    millieu = (deb + fin)/2;
-    if ((fin - deb) >= 1)
+    int millieu;
+    if (fin > deb)
     {
-        deb = millieu + 1;
-        tri_fusion(t, deb, fin, millieu);
-    }
-    else if (((fin - deb) != 0) || ((fin -deb) == 1))
-    {
-        fusionner(t, u, deb, fin, millieu);
+        millieu = (deb + fin) / 2;
+        tri_fusion(t, deb, millieu);
+        tri_fusion(t, millieu + 1, fin);
+        fusionner(t, deb, millieu, fin);
     }
 }
 
-
 //fusionner les parties d'un tableau
-void fusionner(tableau t, tableau u, int deb, int fin, int millieu)
+void fusionner(tableau t, int deb, int fin, int millieu)
 {
-    int i;
-    int j = 0;
-    int k; //variable qui stocke l'indice i
-    int l; //variable qui peut stocker l'indice j
-    int temp; //variable temporaire pour faire un echange
-    bool plusGrand = false; //devient vrai quand on a trouvé un élément plus petit dans la partie droite
-    for (i=deb; i < fin; i++)
+    int u[fin - deb+1]; //tableau pour faire l'échange
+    int compt1 = deb; //stocke la position de deb
+    int deb2 = fin +1; 
+    int compt2 = deb2;//stocke la position de deb2
+    int i = 0;
+    bool estTrie = true; //devient faux quand le tableau est trié 
+    for (i = deb; i <= fin; i++)
     {
-        u[i] = t[i];
+        u[i - deb] = t[i];
     }
-    for (i=millieu + 1; i < fin; i++)//on parcours la partie droite
-    {
-    
-        do //on parcours la partie de gauche
+    while ((i <= millieu) && (estTrie)) //on parcours le tableau de gauche
+    {   
+        if (deb2 == compt1)
         {
-            if (u[i] < u[j]) //si l'element de la partie droite est plus petit que l'élément de la partie gauche
-            {
-                k = i; //on stocke l'indice i pour ne pas l'écraser
-                while (u[j] > u[i]) 
-                {
-                    l = j; //Stockage l'indice de l'élément supérieur
-                    t[l] = u[i]; //On met dans le tableau principal, à la place de l'élément supérieur, la valeur qui est inférieure
-                    k++; //On passe à l'éléent suivant dans la partie droite du deuxième tableau
-                    l++; //On passe à l'indice suivant dans le tableau principal
-                    plusGrand = true;
-                    t[l] = u[j];
-                }
-                j = 0;
-            }
-            j++;
-        }while((plusGrand) && (j < millieu));
+            estTrie = false;
+        }
+        else if (compt2 == (millieu + 1))
+        {
+            t[i] = u[compt1 - deb];
+            compt1++;
+        }
+        else if (t[compt2] > u[compt1 - deb])
+        {
+            t[i] = u[compt1 - deb];
+            compt1++;
+        }
+        else
+        {
+            t[i] = t[compt2];
+            compt2++;
+        } 
+        i++;
     }
-    
-} 
+}
 
 //Remplir un tableau avec des valeurs aléatoires
 void remplirAlea(tableau t)
@@ -90,7 +89,7 @@ void remplirAlea(tableau t)
     int i;
     for (i = 0; i < TAB_MAX; i++)
     {
-        t[i] = rand() % RAND_MAX;
+        t[i] = rand() % 10;
     }
 }
 
@@ -100,9 +99,7 @@ void afficherTableau(tableau t)
     int i;
     for (i = 0; i < TAB_MAX; i++)
     {
-        printf("%d\n\n", t[i]);
+        printf("%d\t", t[i]);
     }
 }
-
-
 
