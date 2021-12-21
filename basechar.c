@@ -3,10 +3,11 @@
 #include <string.h>
 #include <time.h>
 #define TAB_MAX 50
+#define TAB_STRING 50
 
 typedef int tableau[TAB_MAX];
 typedef char tableauchar[TAB_MAX];
-typedef char tableaustring[TAB_MAX][11];
+typedef char tableaustring[TAB_STRING][11];
 
 void creationTableauAlea(tableau);
 void convertToChar(tableau, tableauchar);
@@ -83,8 +84,10 @@ void concatenateChar(tableauchar tabchar, tableaustring tabstring)
     int pointeur;
     int count;
     int j;
+    int ind;
     count = 0;
     pointeur = 0;
+    ind = 0;
     for (int i = 0; i < TAB_MAX; i++)
     {
         do
@@ -92,18 +95,21 @@ void concatenateChar(tableauchar tabchar, tableaustring tabstring)
             nb = rand() % 10;
         } while (nb < 5);
 
+        ind = 0;
         if ((pointeur + nb) > TAB_MAX)
         {
             for (int j = pointeur; j < (TAB_MAX - pointeur); j++)
             {
-                strncat(tabstring[count], &tabchar[j], 1);
+                tabstring[count][ind] = tabchar[j];
+                ind = ind + 1;
             }
         }
         else
         {
             for (j = pointeur; j < (pointeur + nb); j++)
             {
-                strncat(tabstring[count], &tabchar[j], 1);
+                tabstring[count][ind] = tabchar[j];
+                ind = ind + 1;
             }
         }
         pointeur = pointeur + nb;
@@ -112,7 +118,7 @@ void concatenateChar(tableauchar tabchar, tableaustring tabstring)
 }
 void init(tableaustring tabstring)
 {
-    for (int i = 0; i < TAB_MAX; i++)
+    for (int i = 0; i < TAB_STRING; i++)
     {
         strcpy(tabstring[i], "          ");
     }
