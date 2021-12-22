@@ -39,7 +39,7 @@ int main()
     if (rep == 1)
     {
         remplirManuel(tabstring);
-        printf("TRI SHAKER\n\n");
+        printf("\n\nTRI SHAKER\n\n");
         printf("\nTableau initial : \n\n");
         afficherString(tabstring);
         tri_shaker(tabstring, ordre);
@@ -52,7 +52,7 @@ int main()
         creationTableauAlea(tab);            // Création d'un tableau d'entiers
         convertToChar(tab, tabchar);         // Création d'un tableau de carractères compris entre a et z, à partir du tableu d'entiers
         concatenateChar(tabchar, tabstring); // Création d'un tableau de chaînes de carractères
-        printf("TRI SHAKER\n\n");
+        printf("\n\nTRI SHAKER\n\n");
         printf("\nTableau initial : \n\n");
         afficherString(tabstring);
         tri_shaker(tabstring, ordre);
