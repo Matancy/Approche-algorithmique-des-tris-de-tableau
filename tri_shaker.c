@@ -16,8 +16,8 @@ void afficherString(tableaustring);
 void convertToChar(tableau, tableauchar);
 void concatenateChar(tableauchar, tableaustring);
 void init(tableaustring);
-
-
+void remplirManuel(tableaustring t);
+void modeDeRemplissage();
 
 int main()
 {
@@ -26,23 +26,37 @@ int main()
     // tableau nonfavorable = {78, 56, 34, 12, 9, 8, 6, 5, 3, 1};
     // tableau normal = {12, 45, 2, 4, 23, 90, 65, 45, 99, 19};
     int ordre; // Ordre croissant 0 ou décroissant 1
+    int rep;   // L'utilisateur choisi le mode de remplissage
     tableau tab;
     tableauchar tabchar;
-    tableaustring tabstring; 
+    tableaustring tabstring;
+    modeDeRemplissage();
+    scanf("%d", &rep);
     printf("Entrez l'ordre de tri : \n");
     printf("\t 0 - Croissant \n");
     printf("\t 1 - Decroissant \n");
     scanf("%d", &ordre);
-
-    init(tabstring);                     // Initialisation d'un tableau de chaînes de caractères
-    creationTableauAlea(tab);            // Création d'un tableau d'entiers
-    convertToChar(tab, tabchar);         // Création d'un tableau de carractères compris entre a et z, à partir du tableu d'entiers
-    concatenateChar(tabchar, tabstring); // Création d'un tableau de chaînes de carractères
-    printf("\nTableau initial : \n\n");
-    afficherString(tabstring);
-    tri_shaker(tabstring, ordre);
-    printf("\nTableau trie : \n\n");
-    afficherString(tabstring);
+    if (rep == 1)
+    {
+        remplirManuel(tabstring);
+        printf("\nTableau initial : \n\n");
+        afficherString(tabstring);
+        tri_shaker(tabstring, ordre);
+        printf("\nTableau trie : \n\n");
+        afficherString(tabstring);
+    }
+    else if (rep == 2)
+    {
+        init(tabstring);                     // Initialisation d'un tableau de chaînes de caractères
+        creationTableauAlea(tab);            // Création d'un tableau d'entiers
+        convertToChar(tab, tabchar);         // Création d'un tableau de carractères compris entre a et z, à partir du tableu d'entiers
+        concatenateChar(tabchar, tabstring); // Création d'un tableau de chaînes de carractères
+        printf("\nTableau initial : \n\n");
+        afficherString(tabstring);
+        tri_shaker(tabstring, ordre);
+        printf("\nTableau trie : \n\n");
+        afficherString(tabstring);
+    }
 
     // Tri favorable
     // printf("Tableau initial favorable : \n");
@@ -73,11 +87,11 @@ int main()
 void tri_shaker(tableaustring tab, int ordre_des_donnees)
 {
     int indMin, indMax, count, order;
-    indMin = 0;           // Indice du min trié dans le tableau
+    indMin = 0;              // Indice du min trié dans le tableau
     indMax = TAB_STRING - 1; // Indice du max trié dans le tableau
-    count = 0;            // Compteur
-    order = 0;            // 0 => Evolution croissante, 1 => Evolution décroissante
-    int comparaison;      // Négatif quand le premier élément du strcmp est supérieur au second, positif dans le cas inverse et nul sinon
+    count = 0;               // Compteur
+    order = 0;               // 0 => Evolution croissante, 1 => Evolution décroissante
+    int comparaison;         // Négatif quand le premier élément du strcmp est supérieur au second, positif dans le cas inverse et nul sinon
 
     while ((indMax - indMin) != 0) // Tant que l'écart entre le minimum et le max est différent de 0 (soit tableau trié)
     {
@@ -97,7 +111,7 @@ void tri_shaker(tableaustring tab, int ordre_des_donnees)
             // Tri décroissant
             else if (ordre_des_donnees == 1)
             {
-                comparaison = strcmp (tab[count], tab[count + 1]);
+                comparaison = strcmp(tab[count], tab[count + 1]);
                 if (comparaison < 0)
                 {
                     // Si la première valeur est plus petite, on inverse les deux
@@ -162,8 +176,6 @@ void inversion(tableaustring tab, int val1, int val2)
     strcpy(tab[val1], tmp);
 }
 
-
-
 // Affichage d'un tableau de chaînes de carractères
 void afficherString(tableaustring tab)
 {
@@ -171,7 +183,7 @@ void afficherString(tableaustring tab)
     {
         if (strcmp(tab[i], "          ") != 0)
         {
-            printf("%s" ,tab[i]);
+            printf("%s", tab[i]);
             printf("\n");
         }
     }
@@ -246,4 +258,24 @@ void init(tableaustring tabstring)
     {
         strcpy(tabstring[i], "          ");
     }
+}
+
+// Remplissage manuel du tableau (à utiliser uniquement pour les tests)
+void remplirManuel(tableaustring t)
+{
+    int i;
+    int chaîne;
+    for (i = 0; i < TAB_STRING; i++)
+    {
+        printf("Entrez une chaîne qui comporte entre 5 et 10 caractères:\t");
+        scanf("%s", t[i]);
+    }
+}
+
+// Menu pour choisir entre remplissage manuel ou automatique
+void modeDeRemplissage()
+{
+    printf("Comment voulez-vous remplir votre tableau ?\n");
+    printf("1 - Remplissage manuel pour faire un test\n");
+    printf("2 - Remplissage automatique\n");
 }
