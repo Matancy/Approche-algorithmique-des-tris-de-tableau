@@ -121,7 +121,7 @@ void afficherString(tableaustring tab)
     {
         if (strcmp(tab[i], "          ") != 0)
         {
-            printf("%d - %s", i, tab[i]);
+            printf("%s" ,tab[i]);
             printf("\n");
         }
     }
