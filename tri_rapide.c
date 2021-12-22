@@ -39,7 +39,7 @@ int main()
     creationTableauAlea(tab);            // Création d'un tableau d'entiers
     convertToChar(tab, tabchar);         // Création d'un tableau de carractères compris entre a et z, à partir du tableu d'entiers
     concatenateChar(tabchar, tabstring); // Création d'un tableau de chaînes de carractères
-    printf("\n\nTRI RAPIDE\n\n");
+    printf("\n\n\tTRI RAPIDE\n\n");
     printf("\nTableau intial : \n\n");
     afficherString(tabstring);
     tri_rapide(tabstring, 0, TAB_STRING, ordre);

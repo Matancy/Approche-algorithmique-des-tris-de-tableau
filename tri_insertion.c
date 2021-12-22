@@ -38,11 +38,11 @@ int main()
     creationTableauAlea(tab);            // Création d'un tableau d'entiers
     convertToChar(tab, tabchar);         // Création d'un tableau de carractères compris entre a et z, à partir du tableu d'entiers
     concatenateChar(tabchar, tabstring); // Création d'un tableau de chaînes de carractères
-    printf("\n\nTRI PAR INSERTION\n\n");
+    printf("\n\n\tTRI PAR INSERTION\n\n");
     printf("\nTableau initial : \n\n");
     afficherString(tabstring);
     tri_insertion(tabstring, ordre);
-    printf("\nTableau trie : \n\n");
+    printf("\nTableau trié : \n\n");
     afficherString(tabstring);
 
     // printf("Tableau favorable :\n");
@@ -65,7 +65,6 @@ int main()
     // printf("Tableau trie :\n");
     // afficher(normal);
     // printf("\n\n");
-
     return EXIT_SUCCESS;
 }
 
