@@ -1,13 +1,23 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
-#define TAB_MAX 20
+#include <string.h>
+#define TAB_MAX 100
+#define TAB_STRING 20
 
 typedef int tableau[TAB_MAX];
-void tri_shaker(tableau, int);
-void inversion(tableau, int, int);
-void afficher(tableau);
-void creationTableauAlea(tableau, int);
+typedef char tableauchar[TAB_MAX];
+typedef char tableaustring[TAB_STRING][11];
+
+void tri_shaker(tableaustring, int);
+void inversion(tableaustring, int, int);
+void creationTableauAlea(tableau);
+void afficherString(tableaustring);
+void convertToChar(tableau, tableauchar);
+void concatenateChar(tableauchar, tableaustring);
+void init(tableaustring);
+
+
 
 int main()
 {
@@ -17,17 +27,22 @@ int main()
     // tableau normal = {12, 45, 2, 4, 23, 90, 65, 45, 99, 19};
     int ordre; // Ordre croissant 0 ou décroissant 1
     tableau tab;
+    tableauchar tabchar;
+    tableaustring tabstring; 
     printf("Entrez l'ordre de tri : \n");
     printf("\t 0 - Croissant \n");
     printf("\t 1 - Decroissant \n");
     scanf("%d", &ordre);
 
-    creationTableauAlea(tab, TAB_MAX);
-    printf("Tableau initial : \n");
-    afficher(tab);
-    tri_shaker(tab, ordre);
-    printf("Tableau trie : \n");
-    afficher(tab);
+    init(tabstring);                     // Initialisation d'un tableau de chaînes de caractères
+    creationTableauAlea(tab);            // Création d'un tableau d'entiers
+    convertToChar(tab, tabchar);         // Création d'un tableau de carractères compris entre a et z, à partir du tableu d'entiers
+    concatenateChar(tabchar, tabstring); // Création d'un tableau de chaînes de carractères
+    printf("\nTableau initial : \n\n");
+    afficherString(tabstring);
+    tri_shaker(tabstring, ordre);
+    printf("\nTableau trie : \n\n");
+    afficherString(tabstring);
 
     // Tri favorable
     // printf("Tableau initial favorable : \n");
@@ -55,13 +70,14 @@ int main()
     return EXIT_SUCCESS;
 }
 
-void tri_shaker(tableau tab, int ordre_des_donnees)
+void tri_shaker(tableaustring tab, int ordre_des_donnees)
 {
     int indMin, indMax, count, order;
     indMin = 0;           // Indice du min trié dans le tableau
-    indMax = TAB_MAX - 1; // Indice du max trié dans le tableau
+    indMax = TAB_STRING - 1; // Indice du max trié dans le tableau
     count = 0;            // Compteur
     order = 0;            // 0 => Evolution croissante, 1 => Evolution décroissante
+    int comparaison;      // Négatif quand le premier élément du strcmp est supérieur au second, positif dans le cas inverse et nul sinon
 
     while ((indMax - indMin) != 0) // Tant que l'écart entre le minimum et le max est différent de 0 (soit tableau trié)
     {
@@ -69,16 +85,24 @@ void tri_shaker(tableau tab, int ordre_des_donnees)
         if (order == 0)
         {
             // Tri croissant
-            if ((ordre_des_donnees == 0) && (tab[count] > tab[count + 1]))
+            if (ordre_des_donnees == 0)
             {
-                // Si la première valeur est plus grande, on inverse les deux
-                inversion(tab, count, count + 1);
+                comparaison = strcmp(tab[count], tab[count + 1]);
+                if (comparaison > 0)
+                {
+                    // Si la première valeur est plus grande, on inverse les deux
+                    inversion(tab, count, count + 1);
+                }
             }
             // Tri décroissant
-            else if ((ordre_des_donnees == 1) && (tab[count] < tab[count + 1]))
+            else if (ordre_des_donnees == 1)
             {
-                // Si la première valeur est plus petite, on inverse les deux
-                inversion(tab, count + 1, count);
+                comparaison = strcmp (tab[count], tab[count + 1]);
+                if (comparaison < 0)
+                {
+                    // Si la première valeur est plus petite, on inverse les deux
+                    inversion(tab, count + 1, count);
+                }
             }
             // Incrémentation du compteur
             count = count + 1;
@@ -86,20 +110,29 @@ void tri_shaker(tableau tab, int ordre_des_donnees)
         // Partie décroissante
         else
         {
-            if ((ordre_des_donnees == 0) && (tab[count - 1] > tab[count]))
+            // Tri croissant
+            if (ordre_des_donnees == 0)
             {
-                // Si la valeur en dessous est plus grande, on inverse les deux
-                inversion(tab, count - 1, count);
+                comparaison = strcmp(tab[count - 1], tab[count]);
+                if (comparaison > 0)
+                {
+                    // Si la valeur en dessous est plus grande, on inverse les deux
+                    inversion(tab, count - 1, count);
+                }
             }
-            else if ((ordre_des_donnees == 1) && (tab[count - 1]) < tab[count])
+            // Tri décroissant
+            else if (ordre_des_donnees == 1)
             {
-                // Si la valeur en dessous est plus petite, on inverse les deux
-                inversion(tab, count, count - 1);
+                comparaison = strcmp(tab[count - 1], tab[count]);
+                if (comparaison < 0)
+                {
+                    // Si la valeur en dessous est plus petite, on inverse les deux
+                    inversion(tab, count, count - 1);
+                }
             }
             // Décrémentation du compteur
             count = count - 1;
         }
-
         // Inversion en fonction de l'avancée du tri
         if ((count == indMax) || (count == indMin))
         {
@@ -117,39 +150,100 @@ void tri_shaker(tableau tab, int ordre_des_donnees)
                 count = count + 1;
             }
         }
-        //printf("Min : %d \t Max : %d \t Count : %d \t order : %d \n", indMin, indMax, count, order);
     }
 }
 
 // Inversion de deux valeurs
-void inversion(tableau tab, int val1, int val2)
+void inversion(tableaustring tab, int val1, int val2)
 {
-    int tmp;
-    tmp = tab[val2];
-    tab[val2] = tab[val1];
-    tab[val1] = tmp;
+    char tmp[11];
+    strcpy(tmp, tab[val2]);
+    strcpy(tab[val2], tab[val1]);
+    strcpy(tab[val1], tmp);
 }
 
-// Affichage du tableau
-void afficher(tableau tab)
+
+
+// Affichage d'un tableau de chaînes de carractères
+void afficherString(tableaustring tab)
 {
-    for (int i = 0; i < TAB_MAX; i++)
+    for (int i = 0; i < TAB_STRING; i++)
     {
-        printf("%d ", tab[i]);
+        if (strcmp(tab[i], "          ") != 0)
+        {
+            printf("%s" ,tab[i]);
+            printf("\n");
+        }
     }
-    printf("\n");
 }
 
 // Fonction de remplissage aléatoire
-void creationTableauAlea(tableau tab, int taille)
+void creationTableauAlea(tableau tab)
 {
-    for (int i = 0; i < taille; i++)
+    for (int i = 0; i < TAB_MAX; i++)
     {
         int nb;
         do
         {
-            nb = rand() % RAND_MAX;
-        } while (nb == 0);
+            nb = rand() % 122;
+        } while (nb < 97);
         tab[i] = nb;
+    }
+}
+
+void convertToChar(tableau tab, tableauchar tabchar)
+{
+    for (int i = 0; i < TAB_MAX; i++)
+    {
+        tabchar[i] = tab[i];
+    }
+}
+
+void concatenateChar(tableauchar tabchar, tableaustring tabstring)
+{
+    // Génération d'un chiffre
+    int nb;
+    int pointeur;
+    int count;
+    int j;
+    int ind;
+    count = 0;
+    pointeur = 0;
+    ind = 0;
+    for (int i = 0; i < TAB_MAX; i++)
+    {
+        do
+        {
+            nb = rand() % 10;
+        } while (nb < 5);
+
+        ind = 0;
+        if ((pointeur + nb) > TAB_MAX)
+        {
+            for (int j = pointeur; j < TAB_MAX; j++)
+            {
+                tabstring[count][ind] = tabchar[j];
+                ind = ind + 1;
+            }
+        }
+        else
+        {
+            for (j = pointeur; j < (pointeur + nb); j++)
+            {
+                tabstring[count][ind] = tabchar[j];
+                ind = ind + 1;
+            }
+        }
+        pointeur = pointeur + nb;
+        count = count + 1;
+    }
+}
+
+// Fonction pour remplir les cases vides d'un tableau par des espaces
+void init(tableaustring tabstring)
+{
+    for (int i = 0; i < TAB_STRING; i++)
+    {
+        strcpy(tabstring[i], "          ");
     }
 }
