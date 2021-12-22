@@ -45,7 +45,7 @@ int main()
         printf("\n\nTRI RAPIDE\n\n");
         printf("\nTableau intial : \n\n");
         afficherString(tabstring);
-        tri_rapide(tabstring, 0, TAB_STRING - 1, ordre);
+        tri_rapide(tabstring, 0, TAB_STRING, ordre);
         printf("\nTableau trie : \n\n");
         afficherString(tabstring);
     }
@@ -58,8 +58,8 @@ int main()
         printf("\n\nTRI RAPIDE\n\n");
         printf("\nTableau intial : \n\n");
         afficherString(tabstring);
-        tri_rapide(tabstring, 0, TAB_STRING - 1, ordre);
-        printf("\nTableau trie : \n\n");
+        tri_rapide(tabstring, 0, TAB_STRING, ordre);
+        printf("\nTableau trié : \n\n");
         afficherString(tabstring);
     }
 
@@ -160,7 +160,7 @@ void permutation(tableaustring tab, int a, int b)
 // Affichage d'un tableau de chaînes de carractères
 void afficherString(tableaustring tab)
 {
-    for (int i = 0; i < TAB_STRING - 1; i++)
+    for (int i = 0; i < TAB_STRING; i++)
     {
         if (strcmp(tab[i], "          ") != 0)
         {

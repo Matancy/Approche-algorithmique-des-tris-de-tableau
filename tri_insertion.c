@@ -32,12 +32,12 @@ int main()
     int rep;   // L'utilisateur choisi le mode de remplissage
     int ordre; // Croissant : 0; Décroissant : 1
 
+    modeDeRemplissage();
+    scanf("%d", &rep);
     printf("Entrez l'ordre de tri :\n");
     printf("\t0 - Croissant\n");
     printf("\t1 - Decroissant\n\n");
     scanf("%d", &ordre);
-    modeDeRemplissage();
-    scanf("%d", &rep);
     if (rep == 0)
     {
         remplirManuel(tabstring);
