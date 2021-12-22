@@ -36,7 +36,7 @@ int main()
     printf("\t 0 - Croissant \n");
     printf("\t 1 - Decroissant \n");
     scanf("%d", &ordre);
-    if (rep == 1)
+    if (rep == 0)
     {
         remplirManuel(tabstring);
         printf("\n\nTRI SHAKER\n\n");
@@ -46,7 +46,7 @@ int main()
         printf("\nTableau trie : \n\n");
         afficherString(tabstring);
     }
-    else if (rep == 2)
+    else if (rep == 1)
     {
         init(tabstring);                     // Initialisation d'un tableau de chaînes de caractères
         creationTableauAlea(tab);            // Création d'un tableau d'entiers
@@ -266,7 +266,6 @@ void init(tableaustring tabstring)
 void remplirManuel(tableaustring t)
 {
     int i;
-    int chaîne;
     for (i = 0; i < TAB_STRING; i++)
     {
         printf("Entrez une chaîne qui comporte entre 5 et 10 caractères:\t");
@@ -278,6 +277,6 @@ void remplirManuel(tableaustring t)
 void modeDeRemplissage()
 {
     printf("Comment voulez-vous remplir votre tableau ?\n");
-    printf("1 - Remplissage manuel pour faire un test\n");
-    printf("2 - Remplissage automatique\n");
+    printf("0 - Remplissage manuel pour faire un test\n");
+    printf("1 - Remplissage automatique\n");
 }
