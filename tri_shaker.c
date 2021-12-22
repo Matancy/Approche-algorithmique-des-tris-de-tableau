@@ -16,8 +16,6 @@ void afficherString(tableaustring);
 void convertToChar(tableau, tableauchar);
 void concatenateChar(tableauchar, tableaustring);
 void init(tableaustring);
-void remplirManuel(tableaustring t);
-void modeDeRemplissage();
 
 int main()
 {
@@ -26,39 +24,24 @@ int main()
     // tableau nonfavorable = {78, 56, 34, 12, 9, 8, 6, 5, 3, 1};
     // tableau normal = {12, 45, 2, 4, 23, 90, 65, 45, 99, 19};
     int ordre; // Ordre croissant 0 ou décroissant 1
-    int rep;   // L'utilisateur choisi le mode de remplissage
     tableau tab;
     tableauchar tabchar;
     tableaustring tabstring;
-    modeDeRemplissage();
-    scanf("%d", &rep);
     printf("Entrez l'ordre de tri : \n");
     printf("\t 0 - Croissant \n");
     printf("\t 1 - Decroissant \n");
     scanf("%d", &ordre);
-    if (rep == 0)
-    {
-        remplirManuel(tabstring);
-        printf("\n\nTRI SHAKER\n\n");
-        printf("\nTableau initial : \n\n");
-        afficherString(tabstring);
-        tri_shaker(tabstring, ordre);
-        printf("\nTableau trie : \n\n");
-        afficherString(tabstring);
-    }
-    else if (rep == 1)
-    {
-        init(tabstring);                     // Initialisation d'un tableau de chaînes de caractères
-        creationTableauAlea(tab);            // Création d'un tableau d'entiers
-        convertToChar(tab, tabchar);         // Création d'un tableau de carractères compris entre a et z, à partir du tableu d'entiers
-        concatenateChar(tabchar, tabstring); // Création d'un tableau de chaînes de carractères
-        printf("\n\nTRI SHAKER\n\n");
-        printf("\nTableau initial : \n\n");
-        afficherString(tabstring);
-        tri_shaker(tabstring, ordre);
-        printf("\nTableau trie : \n\n");
-        afficherString(tabstring);
-    }
+    
+    init(tabstring);                     // Initialisation d'un tableau de chaînes de caractères
+    creationTableauAlea(tab);            // Création d'un tableau d'entiers
+    convertToChar(tab, tabchar);         // Création d'un tableau de carractères compris entre a et z, à partir du tableu d'entiers
+    concatenateChar(tabchar, tabstring); // Création d'un tableau de chaînes de carractères
+    printf("\n\nTRI SHAKER\n\n");
+    printf("\nTableau initial : \n\n");
+    afficherString(tabstring);
+    tri_shaker(tabstring, ordre);
+    printf("\nTableau trie : \n\n");
+    afficherString(tabstring);
 
     // Tri favorable
     // printf("Tableau initial favorable : \n");
@@ -260,23 +243,4 @@ void init(tableaustring tabstring)
     {
         strcpy(tabstring[i], "          ");
     }
-}
-
-// Remplissage manuel du tableau (à utiliser uniquement pour les tests)
-void remplirManuel(tableaustring t)
-{
-    int i;
-    for (i = 0; i < TAB_STRING; i++)
-    {
-        printf("Entrez une chaîne qui comporte entre 5 et 10 caractères:\t");
-        scanf("%s", t[i]);
-    }
-}
-
-// Menu pour choisir entre remplissage manuel ou automatique
-void modeDeRemplissage()
-{
-    printf("Comment voulez-vous remplir votre tableau ?\n");
-    printf("0 - Remplissage manuel pour faire un test\n");
-    printf("1 - Remplissage automatique\n");
 }

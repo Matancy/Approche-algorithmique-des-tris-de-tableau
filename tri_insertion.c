@@ -16,8 +16,6 @@ void convertToChar(tableau, tableauchar);
 void afficherString(tableaustring);
 void concatenateChar(tableauchar, tableaustring);
 void tri_insertion(tableaustring, int);
-void remplirManuel(tableaustring);
-void modeDeRemplissage();
 
 int main()
 {
@@ -29,38 +27,23 @@ int main()
     tableauchar tabchar;
     tableaustring tabstring;
 
-    int rep;   // L'utilisateur choisi le mode de remplissage
     int ordre; // Croissant : 0; Décroissant : 1
 
-    modeDeRemplissage();
-    scanf("%d", &rep);
     printf("Entrez l'ordre de tri :\n");
     printf("\t0 - Croissant\n");
     printf("\t1 - Decroissant\n\n");
     scanf("%d", &ordre);
-    if (rep == 0)
-    {
-        remplirManuel(tabstring);
-        printf("\n\nTRI PAR INSERTION\n\n");
-        printf("\nTableau initial : \n\n");
-        afficherString(tabstring);
-        tri_insertion(tabstring, ordre);
-        printf("\nTableau trie : \n\n");
-        afficherString(tabstring);
-    }
-    else if (rep == 1)
-    {
-        init(tabstring);                     // Initialisation d'un tableau de chaînes de caractères
-        creationTableauAlea(tab);            // Création d'un tableau d'entiers
-        convertToChar(tab, tabchar);         // Création d'un tableau de carractères compris entre a et z, à partir du tableu d'entiers
-        concatenateChar(tabchar, tabstring); // Création d'un tableau de chaînes de carractères
-        printf("\n\nTRI PAR INSERTION\n\n");
-        printf("\nTableau initial : \n\n");
-        afficherString(tabstring);
-        tri_insertion(tabstring, ordre);
-        printf("\nTableau trie : \n\n");
-        afficherString(tabstring);
-    }
+
+    init(tabstring);                     // Initialisation d'un tableau de chaînes de caractères
+    creationTableauAlea(tab);            // Création d'un tableau d'entiers
+    convertToChar(tab, tabchar);         // Création d'un tableau de carractères compris entre a et z, à partir du tableu d'entiers
+    concatenateChar(tabchar, tabstring); // Création d'un tableau de chaînes de carractères
+    printf("\n\nTRI PAR INSERTION\n\n");
+    printf("\nTableau initial : \n\n");
+    afficherString(tabstring);
+    tri_insertion(tabstring, ordre);
+    printf("\nTableau trie : \n\n");
+    afficherString(tabstring);
 
     // printf("Tableau favorable :\n");
     // afficher(favorable);
@@ -213,23 +196,4 @@ void init(tableaustring tabstring)
     {
         strcpy(tabstring[i], "          ");
     }
-}
-
-// Remplissage manuel du tableau (à utiliser uniquement pour les tests)
-void remplirManuel(tableaustring t)
-{
-    int i;
-    for (i = 0; i < TAB_STRING; i++)
-    {
-        printf("Entrez une chaîne qui comporte entre 5 et 10 caractères:\t");
-        scanf("%s", t[i]);
-    }
-}
-
-// Menu pour choisir entre remplissage manuel ou automatique
-void modeDeRemplissage()
-{
-    printf("Comment voulez-vous remplir votre tableau ?\n");
-    printf("0 - Remplissage manuel pour faire un test\n");
-    printf("1 - Remplissage automatique\n");
 }
