@@ -3,7 +3,7 @@
 #include <string.h>
 #include <time.h>
 #define TAB_MAX 100
-#define TAB_STRING 20
+#define TAB_STRING 5
 
 typedef int tableau[TAB_MAX];
 typedef char tableauchar[TAB_MAX];
