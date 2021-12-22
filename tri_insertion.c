@@ -2,8 +2,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
-#define TAB_MAX 1000
-#define TAB_STRING 200
+#define TAB_MAX 100
+#define TAB_STRING 20
 
 typedef int tableau[TAB_MAX];
 typedef char tableauchar[TAB_MAX];
@@ -39,10 +39,10 @@ int main()
     creationTableauAlea(tab);            // Création d'un tableau d'entiers
     convertToChar(tab, tabchar);         // Création d'un tableau de carractères compris entre a et z, à partir du tableu d'entiers
     concatenateChar(tabchar, tabstring); // Création d'un tableau de chaînes de carractères
-    printf("Tableau initial : \n");
+    printf("\nTableau initial : \n\n");
     afficherString(tabstring);
     tri_insertion(tabstring, ordre);
-    printf("Tableau trie : \n");
+    printf("\nTableau trie : \n\n");
     afficherString(tabstring);
 
     // printf("Tableau favorable :\n");
@@ -80,26 +80,35 @@ void tri_insertion(tableaustring t, int ordre)
     {
         j = i;
         // Ordre croissant
-        comparaison = strcmp(t[i], t[i - 1]);
-        if ((ordre == 0) && (comparaison < 0))
+        if (ordre == 0)
         {
-            while ((comparaison < 0) && (j != 0))
+            comparaison = strcmp(t[i], t[i - 1]);
+            if (comparaison < 0) // Si t[i] est inférieur à t[i - 1]
             {
-                strcpy(temp, t[j - 1]);
-                strcpy(t[j - 1], t[j]);
-                strcpy(t[j], temp);
-                comparaison = strcmp(t[i], t[i - 1]);
+                while ((comparaison < 0) && (j > 0))
+                {
+                    strcpy(temp, t[j - 1]);
+                    strcpy(t[j - 1], t[j]);
+                    strcpy(t[j], temp);
+                    j--;
+                    comparaison = strcmp(t[j], t[j - 1]);
+                }
             }
         }
         // Ordre décroissant
-        else if ((ordre == 1) && (strcmp(t[i - 1], t[i]) == -1))
+        else if (ordre == 1)
         {
-            while ((strcmp(t[j - 1], t[j]) == -1) && (j != 0))
+            comparaison = strcmp(t[i - 1], t[i]); 
+            if (comparaison < 0) // Si t[i - 1] est inférieur à t[i]
             {
-                strcpy(temp, t[j]);
-                strcpy(t[j], t[j - 1]);
-                strcpy(t[j - 1], temp);
-                j = j - 1;
+                while ((comparaison < 0) && (j > 0)) 
+                {
+                    strcpy(temp, t[j]);
+                    strcpy(t[j], t[j - 1]);
+                    strcpy(t[j - 1], temp);
+                    j--;
+                    comparaison = strcmp(t[j-1], t[j]);
+                }
             }
         }
     }
@@ -112,7 +121,7 @@ void afficherString(tableaustring tab)
     {
         if (strcmp(tab[i], "          ") != 0)
         {
-            printf("%s", tab[i]);
+            printf("%d - %s", i, tab[i]);
             printf("\n");
         }
     }
