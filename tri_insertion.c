@@ -2,8 +2,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
-#define TAB_MAX 100    // Taille maximale des tableaux d'entiers et de caractères.
-#define TAB_STRING 10  // Taille maximale du tableau de chaînes de caractères.
+#define TAB_MAX 1000000    // Taille maximale des tableaux d'entiers et de caractères.
+#define TAB_STRING 100000  // Taille maximale du tableau de chaînes de caractères.
                        // La taille est de 10 car le premier tableau d'entiers donne, après convertion, un tableau d'environ 50 carractères qui donne, après concaténation, un tableau de 10 chaînes de caractères.
                        // Les caractères sont concaténés entre eux pour donner des chaînes dont la taille est comprise entre 5 et 10. Ce qui donne un tableau de 10 carractères au minimum. 
 
@@ -30,6 +30,8 @@ int main()
     tableaustring tabstring;
 
     int ordre; // Croissant : 0; Décroissant : 1
+    double temps; // Temps cpu du tri
+    
 
     printf("Entrez l'ordre de tri :\n");
     printf("\t0 - Croissant\n");
@@ -41,11 +43,16 @@ int main()
     convertToChar(tab, tabchar);         // Création d'un tableau de carractères compris entre a et z, à partir du tableu d'entiers
     concatenateChar(tabchar, tabstring); // Création d'un tableau de chaînes de carractères
     printf("\n\n\tTRI PAR INSERTION\n\n");
-    printf("\nTableau initial : \n\n");
-    afficherString(tabstring);
+    //printf("\nTableau initial : \n\n");
+    //afficherString(tabstring);
+
+    clock_t begin = clock(); // On enregistre l'heure dans une variable nommée begin
     tri_insertion(tabstring, ordre);
-    printf("\nTableau trié : \n\n");
-    afficherString(tabstring);
+    clock_t end = clock(); // On enregitre de nouveau l'heure dans une seconde variable nommée end
+    temps = (double)(end - begin) / CLOCKS_PER_SEC; // Calcul de la différence entre l'heure au début du tri et l'heure à la fin du tri
+    //printf("\nTableau trié : \n\n");
+    //afficherString(tabstring);
+    printf("Temps cpu du tri: %f sec \n" ,temps);
 
     // printf("Tableau favorable :\n");
     // afficher(favorable);
@@ -76,6 +83,7 @@ void tri_insertion(tableaustring t, int ordre)
     int comparaison; // Négatif quand le premier élément du strcmp est supérieur au second, positif dans le cas inverse et nul sinon
     int i;
     int j;
+    int nbrCompare = 0; // Compte le nombre de comparaisons
     char temp[11]; // Variable temporaire pour faire un échange
     for (i = 1; i < TAB_STRING; i++)
     {
@@ -84,6 +92,7 @@ void tri_insertion(tableaustring t, int ordre)
         if (ordre == 0)
         {
             comparaison = strcmp(t[i], t[i - 1]);
+            nbrCompare++; 
             if (comparaison < 0) // Si t[i] est inférieur à t[i - 1]
             {
                 while ((comparaison < 0) && (j > 0))
@@ -198,3 +207,5 @@ void init(tableaustring tabstring)
         strcpy(tabstring[i], "          ");
     }
 }
+
+//Fonction pour compter le temps cpu du tri

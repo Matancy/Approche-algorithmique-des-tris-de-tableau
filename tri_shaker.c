@@ -2,8 +2,8 @@
 #include <stdio.h>
 #include <time.h>
 #include <string.h>
-#define TAB_MAX 100    // Taille maximale des tableaux d'entiers et de caractères.
-#define TAB_STRING 10  // Taille maximale du tableau de chaînes de caractères.
+#define TAB_MAX 100000    // Taille maximale des tableaux d'entiers et de caractères.
+#define TAB_STRING 10000  // Taille maximale du tableau de chaînes de caractères.
                        // La taille est de 10 car le premier tableau d'entiers donne, après convertion, un tableau d'environ 50 carractères qui donne, après concaténation, un tableau de 10 chaînes de caractères.
                        // Les caractères sont concaténés entre eux pour donner des chaînes dont la taille est comprise entre 5 et 10. Ce qui donne un tableau de 10 carractères au minimum
 
@@ -26,6 +26,7 @@ int main()
     // tableau nonfavorable = {78, 56, 34, 12, 9, 8, 6, 5, 3, 1};
     // tableau normal = {12, 45, 2, 4, 23, 90, 65, 45, 99, 19};
     int ordre; // Ordre croissant 0 ou décroissant 1
+    double temps; // Temps cpu du tri
     tableau tab;
     tableauchar tabchar;
     tableaustring tabstring;
@@ -39,11 +40,16 @@ int main()
     convertToChar(tab, tabchar);         // Création d'un tableau de carractères compris entre a et z, à partir du tableu d'entiers
     concatenateChar(tabchar, tabstring); // Création d'un tableau de chaînes de carractères
     printf("\n\n\tTRI SHAKER\n\n");
-    printf("\nTableau initial : \n\n");
-    afficherString(tabstring);
+    
+    clock_t end = clock(); // On enregistre l'heure dans une variable nommée begin
     tri_shaker(tabstring, ordre);
-    printf("\nTableau trié : \n\n");
-    afficherString(tabstring);
+    clock_t begin = clock(); // On enregitre de nouveau l'heure dans une seconde variable nommée end
+    temps = (double)(end - begin) / CLOCKS_PER_SEC; // Calcul de la différence entre l'heure au début du tri et l'heure à la fin du tri
+    printf("Temps cpu du tri: %f sec \n" ,temps);
+    //printf("\nTableau initial : \n\n");
+    //afficherString(tabstring);
+    //printf("\nTableau trié : \n\n");
+    //afficherString(tabstring);
 
     // Tri favorable
     // printf("Tableau initial favorable : \n");
