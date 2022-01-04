@@ -12,7 +12,7 @@ typedef int tableau[TAB_MAX];
 typedef char tableauchar[TAB_MAX];
 typedef char tableaustring[TAB_STRING][11];
 
-void tri_rapide(tableaustring, int, int, int);
+void tri_rapide(tableaustring, int, int, int, int *, int *);
 void permutation(tableaustring, int, int);
 void creationTableauAlea(tableau);
 void afficherString(tableaustring);
@@ -32,7 +32,8 @@ int main()
 
     int ordre; // Croissant : 0, Décroissant : 1
     double temps; // Temps cpu du tri
-
+    int nbrCompare = 0; // Compte le nombre de comparaisons
+    int nbrInverse = 0; // Compte le nombre de permutations
     printf("Entrez l'ordre de tri :\n");
     printf("\t0 - Croissant\n");
     printf("\t1 - Decroissant\n\n");
@@ -47,10 +48,12 @@ int main()
     //afficherString(tabstring);
 
     clock_t begin = clock(); // On enregistre l'heure dans une variable nommée begin
-    tri_rapide(tabstring, 0, TAB_STRING, ordre);
+    tri_rapide(tabstring, 0, TAB_STRING, ordre, &nbrCompare, &nbrInverse);
     clock_t end = clock(); // On enregitre de nouveau l'heure dans une seconde variable nommée end
     temps = (double)(end - begin) / CLOCKS_PER_SEC; // Calcul de la différence entre l'heure au début du tri et l'heure à la fin du tri
-    printf("Temps cpu du tri: %f sec \n" ,temps);
+    printf("Temps cpu du tri: %f sec \n\n" ,temps);
+    printf("Nombre de comparaisons: %d\n\n" ,nbrCompare);
+    printf("Nombre de permutations: %d\n\n" ,nbrInverse);
     //printf("\nTableau trié : \n\n");
     //afficherString(tabstring);
 
@@ -79,7 +82,7 @@ int main()
 }
 
 // Tri rapide
-void tri_rapide(tableaustring tab, int debut, int fin, int ordre)
+void tri_rapide(tableaustring tab, int debut, int fin, int ordre, int *nbrCompare, int *nbrInverse)
 {
     int comparaison; // Négatif quand le premier élément du strcmp est supérieur au second, positif dans le cas inverse et nul sinon
     int pivot, i, j;
@@ -95,6 +98,7 @@ void tri_rapide(tableaustring tab, int debut, int fin, int ordre)
             {
                 // Approche jusqu'au pivot
                 comparaison = strcmp(tab[i], tab[pivot]);
+                *nbrCompare = *nbrCompare + 1;
                 while (((comparaison < 0) || (comparaison == 0)) && (i < fin))
                 {
                     i++;
@@ -102,6 +106,7 @@ void tri_rapide(tableaustring tab, int debut, int fin, int ordre)
                 }
                 // Approche juste avant le pivot
                 comparaison = strcmp(tab[j], tab[pivot]);
+                *nbrCompare = *nbrCompare + 1;
                 while (comparaison > 0)
                 {
                     j--;
@@ -113,6 +118,7 @@ void tri_rapide(tableaustring tab, int debut, int fin, int ordre)
             {
                 // Approche jusqu'au pivot
                 comparaison = strcmp(tab[i], tab[pivot]);
+                *nbrCompare = *nbrCompare + 1;
                 while (((comparaison > 0) || (comparaison == 0)) && (i < fin))
                 {
                     i++;
@@ -121,6 +127,7 @@ void tri_rapide(tableaustring tab, int debut, int fin, int ordre)
 
                 // Approche juste avant le pivot
                 comparaison = strcmp(tab[j], tab[pivot]);
+                *nbrCompare = *nbrCompare + 1;
                 while (comparaison < 0)
                 {
                     j--;
@@ -130,12 +137,13 @@ void tri_rapide(tableaustring tab, int debut, int fin, int ordre)
             if (i < j)
             {
                 permutation(tab, i, j);
+                *nbrInverse = *nbrInverse + 1;
             }
         }
-
         permutation(tab, pivot, j);
-        tri_rapide(tab, debut, j - 1, ordre);
-        tri_rapide(tab, j + 1, fin, ordre);
+        *nbrInverse = *nbrInverse + 1;
+        tri_rapide(tab, debut, j - 1, ordre, nbrCompare, nbrInverse);
+        tri_rapide(tab, j + 1, fin, ordre, nbrCompare, nbrInverse);
     }
 }
 

@@ -2,8 +2,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
-#define TAB_MAX 1000000    // Taille maximale des tableaux d'entiers et de caractères.
-#define TAB_STRING 100000  // Taille maximale du tableau de chaînes de caractères.
+#define TAB_MAX 10000    // Taille maximale des tableaux d'entiers et de caractères.
+#define TAB_STRING 1000  // Taille maximale du tableau de chaînes de caractères.
                        // La taille est de 10 car le premier tableau d'entiers donne, après convertion, un tableau d'environ 50 carractères qui donne, après concaténation, un tableau de 10 chaînes de caractères.
                        // Les caractères sont concaténés entre eux pour donner des chaînes dont la taille est comprise entre 5 et 10. Ce qui donne un tableau de 10 carractères au minimum. 
 
@@ -95,7 +95,7 @@ void tri_insertion(tableaustring t, int ordre)
             nbrCompare++; 
             if (comparaison < 0) // Si t[i] est inférieur à t[i - 1]
             {
-                while ((comparaison < 0) && (j > 0))
+                while ((comparaison < 0) && (j > 0)) 
                 {
                     strcpy(temp, t[j - 1]);
                     strcpy(t[j - 1], t[j]);
@@ -109,6 +109,7 @@ void tri_insertion(tableaustring t, int ordre)
         else if (ordre == 1)
         {
             comparaison = strcmp(t[i - 1], t[i]);
+            nbrCompare++;
             if (comparaison < 0) // Si t[i - 1] est inférieur à t[i]
             {
                 while ((comparaison < 0) && (j > 0))

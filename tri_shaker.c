@@ -11,7 +11,7 @@ typedef int tableau[TAB_MAX];
 typedef char tableauchar[TAB_MAX];
 typedef char tableaustring[TAB_STRING][11];
 
-void tri_shaker(tableaustring, int);
+void tri_shaker(tableaustring, int, int *, int *);
 void inversion(tableaustring, int, int);
 void creationTableauAlea(tableau);
 void afficherString(tableaustring);
@@ -27,6 +27,8 @@ int main()
     // tableau normal = {12, 45, 2, 4, 23, 90, 65, 45, 99, 19};
     int ordre; // Ordre croissant 0 ou décroissant 1
     double temps; // Temps cpu du tri
+    int nbrCompare = 0; // Compte le nombre de comparaisons
+    int nbrInverse = 0; // Compte le nombre d'inversions
     tableau tab;
     tableauchar tabchar;
     tableaustring tabstring;
@@ -41,11 +43,13 @@ int main()
     concatenateChar(tabchar, tabstring); // Création d'un tableau de chaînes de carractères
     printf("\n\n\tTRI SHAKER\n\n");
     
-    clock_t end = clock(); // On enregistre l'heure dans une variable nommée begin
-    tri_shaker(tabstring, ordre);
-    clock_t begin = clock(); // On enregitre de nouveau l'heure dans une seconde variable nommée end
+    clock_t begin = clock(); // On enregistre l'heure dans une variable nommée begin
+    tri_shaker(tabstring, ordre, &nbrCompare, &nbrInverse);
+    clock_t end = clock(); // On enregitre de nouveau l'heure dans une seconde variable nommée end
     temps = (double)(end - begin) / CLOCKS_PER_SEC; // Calcul de la différence entre l'heure au début du tri et l'heure à la fin du tri
-    printf("Temps cpu du tri: %f sec \n" ,temps);
+    printf("Temps cpu du tri: %f sec \n\n" ,temps);
+    printf("Nombre de comparaisons: %d \n\n" ,nbrCompare);
+    printf("Nombre de permutations: %d \n\n" ,nbrInverse);
     //printf("\nTableau initial : \n\n");
     //afficherString(tabstring);
     //printf("\nTableau trié : \n\n");
@@ -77,7 +81,7 @@ int main()
     return EXIT_SUCCESS;
 }
 
-void tri_shaker(tableaustring tab, int ordre_des_donnees)
+void tri_shaker(tableaustring tab, int ordre_des_donnees, int *nbrCompare, int *nbrInverse)
 {
     int indMin, indMax, count, order;
     indMin = 0;              // Indice du min trié dans le tableau
@@ -85,7 +89,6 @@ void tri_shaker(tableaustring tab, int ordre_des_donnees)
     count = 0;               // Compteur
     order = 0;               // 0 => Evolution croissante, 1 => Evolution décroissante
     int comparaison;         // Négatif quand le premier élément du strcmp est supérieur au second, positif dans le cas inverse et nul sinon
-
     while ((indMax - indMin) != 0) // Tant que l'écart entre le minimum et le max est différent de 0 (soit tableau trié)
     {
         // Partie croissante
@@ -95,20 +98,24 @@ void tri_shaker(tableaustring tab, int ordre_des_donnees)
             if (ordre_des_donnees == 0)
             {
                 comparaison = strcmp(tab[count], tab[count + 1]);
+                *nbrCompare = *nbrCompare + 1;
                 if (comparaison > 0)
                 {
                     // Si la première valeur est plus grande, on inverse les deux
                     inversion(tab, count, count + 1);
+                    *nbrInverse = *nbrInverse + 1;
                 }
             }
             // Tri décroissant
             else if (ordre_des_donnees == 1)
             {
                 comparaison = strcmp(tab[count], tab[count + 1]);
+                *nbrCompare = *nbrCompare + 1;
                 if (comparaison < 0)
                 {
                     // Si la première valeur est plus petite, on inverse les deux
                     inversion(tab, count + 1, count);
+                    *nbrInverse = *nbrInverse + 1;
                 }
             }
             // Incrémentation du compteur
@@ -121,20 +128,24 @@ void tri_shaker(tableaustring tab, int ordre_des_donnees)
             if (ordre_des_donnees == 0)
             {
                 comparaison = strcmp(tab[count - 1], tab[count]);
+                *nbrCompare = *nbrCompare + 1;
                 if (comparaison > 0)
                 {
                     // Si la valeur en dessous est plus grande, on inverse les deux
                     inversion(tab, count - 1, count);
+                    *nbrInverse = *nbrInverse + 1;
                 }
             }
             // Tri décroissant
             else if (ordre_des_donnees == 1)
             {
                 comparaison = strcmp(tab[count - 1], tab[count]);
+                *nbrCompare = *nbrCompare + 1;
                 if (comparaison < 0)
                 {
                     // Si la valeur en dessous est plus petite, on inverse les deux
                     inversion(tab, count, count - 1);
+                    nbrInverse = nbrInverse + 1;
                 }
             }
             // Décrémentation du compteur
