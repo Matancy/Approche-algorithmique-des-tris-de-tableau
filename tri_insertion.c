@@ -2,10 +2,19 @@
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
+<<<<<<< HEAD
 #define TAB_MAX 10000    // Taille maximale des tableaux d'entiers et de caractères.
 #define TAB_STRING 1000  // Taille maximale du tableau de chaînes de caractères.
                        // La taille est de 10 car le premier tableau d'entiers donne, après convertion, un tableau d'environ 50 carractères qui donne, après concaténation, un tableau de 10 chaînes de caractères.
                        // Les caractères sont concaténés entre eux pour donner des chaînes dont la taille est comprise entre 5 et 10. Ce qui donne un tableau de 10 carractères au minimum. 
+=======
+// Taille maximale des tableaux d'entiers et de caracteres.
+#define TAB_MAX 10000
+// Taille maximale du tableau de chaines de caractères.
+// La taille est de 10 car le premier tableau d'entiers donne, après convertion, un tableau d'environ 50 carractères qui donne, après concaténation, un tableau de 10 chaînes de caractères.
+// Les caractères sont concaténés entre eux pour donner des chaînes dont la taille est comprise entre 5 et 10. Ce qui donne un tableau de 10 carractères au minimum.
+#define TAB_STRING 1000
+>>>>>>> 730e44135bd7034fec2a0f2b126937c4c85c772a
 
 typedef int tableau[TAB_MAX];
 typedef char tableauchar[TAB_MAX];
@@ -17,7 +26,7 @@ void init(tableaustring);
 void convertToChar(tableau, tableauchar);
 void afficherString(tableaustring);
 void concatenateChar(tableauchar, tableaustring);
-void tri_insertion(tableaustring, int);
+void tri_insertion(tableaustring, int, int *, int *);
 
 int main()
 {
@@ -29,9 +38,13 @@ int main()
     tableauchar tabchar;
     tableaustring tabstring;
 
-    int ordre; // Croissant : 0; Décroissant : 1
-    double temps; // Temps cpu du tri
-    
+    int ordre;          // Croissant : 0; Décroissant : 1
+    double temps;       // Temps cpu du tri
+    int nbComparaison;  // Nombre de comparaisons
+    int nbPermutations; // Nombre de permutations
+
+    nbComparaison = 0;
+    nbPermutations = 0;
 
     printf("Entrez l'ordre de tri :\n");
     printf("\t0 - Croissant\n");
@@ -47,12 +60,14 @@ int main()
     //afficherString(tabstring);
 
     clock_t begin = clock(); // On enregistre l'heure dans une variable nommée begin
-    tri_insertion(tabstring, ordre);
-    clock_t end = clock(); // On enregitre de nouveau l'heure dans une seconde variable nommée end
+    tri_insertion(tabstring, ordre, &nbComparaison, &nbPermutations);
+    clock_t end = clock();                          // On enregitre de nouveau l'heure dans une seconde variable nommée end
     temps = (double)(end - begin) / CLOCKS_PER_SEC; // Calcul de la différence entre l'heure au début du tri et l'heure à la fin du tri
     //printf("\nTableau trié : \n\n");
-    //afficherString(tabstring);
-    printf("Temps cpu du tri: %f sec \n" ,temps);
+    // afficherString(tabstring);
+    printf("Temps cpu du tri: %f sec \n", temps);
+    printf("Nombre de comparaisons : %d \n", nbComparaison);
+    printf("Nombre de permutations : %d \n", nbPermutations);
 
     // printf("Tableau favorable :\n");
     // afficher(favorable);
@@ -78,12 +93,11 @@ int main()
 }
 
 // Tri par insertion des tableaux
-void tri_insertion(tableaustring t, int ordre)
+void tri_insertion(tableaustring t, int ordre, int *nbComparaison, int *nbPermutation)
 {
     int comparaison; // Négatif quand le premier élément du strcmp est supérieur au second, positif dans le cas inverse et nul sinon
     int i;
     int j;
-    int nbrCompare = 0; // Compte le nombre de comparaisons
     char temp[11]; // Variable temporaire pour faire un échange
     for (i = 1; i < TAB_STRING; i++)
     {
@@ -92,7 +106,7 @@ void tri_insertion(tableaustring t, int ordre)
         if (ordre == 0)
         {
             comparaison = strcmp(t[i], t[i - 1]);
-            nbrCompare++; 
+            *nbComparaison = *nbComparaison + 1;
             if (comparaison < 0) // Si t[i] est inférieur à t[i - 1]
             {
                 while ((comparaison < 0) && (j > 0)) 
@@ -100,8 +114,10 @@ void tri_insertion(tableaustring t, int ordre)
                     strcpy(temp, t[j - 1]);
                     strcpy(t[j - 1], t[j]);
                     strcpy(t[j], temp);
+                    *nbPermutation = *nbPermutation + 1;
                     j--;
                     comparaison = strcmp(t[j], t[j - 1]);
+                    *nbComparaison = *nbComparaison + 1;
                 }
             }
         }
@@ -109,7 +125,7 @@ void tri_insertion(tableaustring t, int ordre)
         else if (ordre == 1)
         {
             comparaison = strcmp(t[i - 1], t[i]);
-            nbrCompare++;
+            *nbComparaison = *nbComparaison + 1;
             if (comparaison < 0) // Si t[i - 1] est inférieur à t[i]
             {
                 while ((comparaison < 0) && (j > 0))
@@ -117,8 +133,10 @@ void tri_insertion(tableaustring t, int ordre)
                     strcpy(temp, t[j]);
                     strcpy(t[j], t[j - 1]);
                     strcpy(t[j - 1], temp);
+                    *nbPermutation = *nbPermutation + 1;
                     j--;
                     comparaison = strcmp(t[j - 1], t[j]);
+                    *nbComparaison = *nbComparaison + 1;
                 }
             }
         }
