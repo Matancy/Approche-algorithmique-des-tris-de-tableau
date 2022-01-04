@@ -2,19 +2,12 @@
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
-<<<<<<< HEAD
-#define TAB_MAX 10000    // Taille maximale des tableaux d'entiers et de caractères.
-#define TAB_STRING 1000  // Taille maximale du tableau de chaînes de caractères.
-                       // La taille est de 10 car le premier tableau d'entiers donne, après convertion, un tableau d'environ 50 carractères qui donne, après concaténation, un tableau de 10 chaînes de caractères.
-                       // Les caractères sont concaténés entre eux pour donner des chaînes dont la taille est comprise entre 5 et 10. Ce qui donne un tableau de 10 carractères au minimum. 
-=======
 // Taille maximale des tableaux d'entiers et de caracteres.
 #define TAB_MAX 10000
 // Taille maximale du tableau de chaines de caractères.
 // La taille est de 10 car le premier tableau d'entiers donne, après convertion, un tableau d'environ 50 carractères qui donne, après concaténation, un tableau de 10 chaînes de caractères.
 // Les caractères sont concaténés entre eux pour donner des chaînes dont la taille est comprise entre 5 et 10. Ce qui donne un tableau de 10 carractères au minimum.
 #define TAB_STRING 1000
->>>>>>> 730e44135bd7034fec2a0f2b126937c4c85c772a
 
 typedef int tableau[TAB_MAX];
 typedef char tableauchar[TAB_MAX];
