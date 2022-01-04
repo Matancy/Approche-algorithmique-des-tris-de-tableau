@@ -3,12 +3,12 @@
 #include <string.h>
 #include <time.h>
 // Taille maximale des tableaux d'entiers
-#define TAB_MAX 500000
+#define TAB_MAX 100000
 
 typedef int tableau[TAB_MAX];
 
 void afficher(tableau);
-void tri_insertion(tableau, int, int *, int *);
+void tri_insertion(tableau, int, unsigned long *, unsigned long *);
 void creationTableauAlea(tableau, int);
 
 int main()
@@ -21,8 +21,8 @@ int main()
 
     int ordre;          // Croissant : 0; Décroissant : 1
     double temps;       // Temps cpu du tri
-    int nbComparaison;  // Nombre de comparaisons
-    int nbPermutations; // Nombre de permutations
+    unsigned long nbComparaison;  // Nombre de comparaisons
+    unsigned long nbPermutations; // Nombre de permutations
 
     nbComparaison = 0;
     nbPermutations = 0;
@@ -44,8 +44,8 @@ int main()
     //printf("\nTableau trié : \n\n");
     // afficherString(tabstring);
     printf("Temps cpu du tri: %f sec \n", temps);
-    printf("Nombre de comparaisons : %d \n", nbComparaison);
-    printf("Nombre de permutations : %d \n", nbPermutations);
+    printf("Nombre de comparaisons : %lu \n", nbComparaison);
+    printf("Nombre de permutations : %lu \n", nbPermutations);
 
     // printf("Tableau favorable :\n");
     // afficher(favorable);
@@ -71,7 +71,7 @@ int main()
 }
 
 // Tri par insertion des tableaux
-void tri_insertion(tableau t, int ordre, int *nbComparaison, int *nbPermutation)
+void tri_insertion(tableau t, int ordre, unsigned long *nbComparaison, unsigned long *nbPermutation)
 {
     int i;
     int j;
@@ -105,6 +105,8 @@ void tri_insertion(tableau t, int ordre, int *nbComparaison, int *nbPermutation)
                 *nbComparaison = *nbComparaison + 1;
                 *nbPermutation = *nbPermutation + 1;
             }
+            *nbComparaison = *nbComparaison + 1;
+        } else {
             *nbComparaison = *nbComparaison + 1;
         }
     }
