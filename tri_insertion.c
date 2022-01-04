@@ -102,7 +102,7 @@ void tri_insertion(tableaustring t, int ordre, int *nbComparaison, int *nbPermut
             *nbComparaison = *nbComparaison + 1;
             if (comparaison < 0) // Si t[i] est inférieur à t[i - 1]
             {
-                while ((comparaison < 0) && (j > 0)) 
+                while ((comparaison < 0) && (j > 0))
                 {
                     strcpy(temp, t[j - 1]);
                     strcpy(t[j - 1], t[j]);
