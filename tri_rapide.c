@@ -43,6 +43,8 @@ int main()
     clock_t end = clock();                          // Enregistrement du temps de fin
     temps = (double)(end - begin) / CLOCKS_PER_SEC; // Calcul du temps d'exécution
     printf("Temps cpu du tri: %f sec \n", temps);
+    printf("Nombre de comparaisons : %lu \n", nbComparaison);
+    printf("Nombre de permutations : %lu \n", nbPermutation);
     //printf("\nTableau trié : \n\n");
     //afficherString(tabstring);
 
