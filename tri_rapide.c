@@ -3,7 +3,7 @@
 #include <stdbool.h>
 #include <time.h>
 #include <string.h>
-#define TAB_MAX 500000 // Taille maximale des tableaux d'entiers et de caractères.
+#define TAB_MAX 500000 // Taille maximale des tableaux d'entiers
 
 typedef int tableau[TAB_MAX];
 
@@ -38,10 +38,10 @@ int main()
     //printf("\nTableau intial : \n\n");
     //afficherString(tabstring);
 
-    clock_t begin = clock(); // On enregistre l'heure dans une variable nommée begin
+    clock_t begin = clock(); // Enregistrement du temps de début
     tri_rapide(tab, 0, TAB_MAX, ordre, &nbComparaison, &nbPermutations);
-    clock_t end = clock();                          // On enregitre de nouveau l'heure dans une seconde variable nommée end
-    temps = (double)(end - begin) / CLOCKS_PER_SEC; // Calcul de la différence entre l'heure au début du tri et l'heure à la fin du tri
+    clock_t end = clock();                          // Enregistrement du temps de fin
+    temps = (double)(end - begin) / CLOCKS_PER_SEC; // Calcul du temps d'exécution
     printf("Temps cpu du tri: %f sec \n", temps);
     //printf("\nTableau trié : \n\n");
     //afficherString(tabstring);
