@@ -3,22 +3,14 @@
 #include <stdbool.h>
 #include <time.h>
 #include <string.h>
-#define TAB_MAX 1000000   // Taille maximale des tableaux d'entiers et de caractères.
-#define TAB_STRING 100000 // Taille maximale du tableau de chaînes de caractères. 
-                          // La taille est de 10 car le premier tableau d'entiers donne, après convertion, un tableau d'environ 50 carractères qui donne, après concaténation, un tableau de 10 chaînes de caractères.
-                          // Les caractères sont concaténés entre eux pour donner des chaînes dont la taille est comprise entre 5 et 10. Ce qui donne un tableau de 10 carractères au minimum.
+#define TAB_MAX 500000 // Taille maximale des tableaux d'entiers et de caractères.
 
 typedef int tableau[TAB_MAX];
-typedef char tableauchar[TAB_MAX];
-typedef char tableaustring[TAB_STRING][11];
 
-void tri_rapide(tableaustring, int, int, int);
-void permutation(tableaustring, int, int);
-void creationTableauAlea(tableau);
-void afficherString(tableaustring);
-void convertToChar(tableau, tableauchar);
-void concatenateChar(tableauchar, tableaustring);
-void init(tableaustring);
+void tri_rapide(tableau, int, int, int, unsigned long *, unsigned long *);
+void permutation(tableau, int, int);
+void afficher(tableau);
+void creationTableauAlea(tableau, int);
 
 int main()
 {
@@ -27,30 +19,30 @@ int main()
     // tableau favorable = {1, 3, 5, 6, 8, 9, 12, 34, 56, 78};
     // tableau nonfavorable = {78, 56, 34, 12, 9, 8, 6, 5, 3, 1};
     tableau tab;
-    tableauchar tabchar;
-    tableaustring tabstring;
 
-    int ordre; // Croissant : 0, Décroissant : 1
-    double temps; // Temps cpu du tri
+    int ordre;                    // Croissant : 0, Décroissant : 1
+    double temps;                 // Temps cpu du tri
+    unsigned long nbComparaison;  // Nombre de comparaisons
+    unsigned long nbPermutations; // Nombre de permutations
+
+    nbComparaison = 0;
+    nbPermutations = 0;
 
     printf("Entrez l'ordre de tri :\n");
     printf("\t0 - Croissant\n");
     printf("\t1 - Decroissant\n\n");
     scanf("%d", &ordre);
 
-    init(tabstring);                     // Initialisation d'un tableau de chaînes de caractères
-    creationTableauAlea(tab);            // Création d'un tableau d'entiers
-    convertToChar(tab, tabchar);         // Création d'un tableau de carractères compris entre a et z, à partir du tableu d'entiers
-    concatenateChar(tabchar, tabstring); // Création d'un tableau de chaînes de carractères
+    creationTableauAlea(tab, TAB_MAX); // Création d'un tableau d'entiers
     printf("\n\n\tTRI RAPIDE\n\n");
     //printf("\nTableau intial : \n\n");
     //afficherString(tabstring);
 
     clock_t begin = clock(); // On enregistre l'heure dans une variable nommée begin
-    tri_rapide(tabstring, 0, TAB_STRING, ordre);
-    clock_t end = clock(); // On enregitre de nouveau l'heure dans une seconde variable nommée end
+    tri_rapide(tab, 0, TAB_MAX, ordre, &nbComparaison, &nbPermutations);
+    clock_t end = clock();                          // On enregitre de nouveau l'heure dans une seconde variable nommée end
     temps = (double)(end - begin) / CLOCKS_PER_SEC; // Calcul de la différence entre l'heure au début du tri et l'heure à la fin du tri
-    printf("Temps cpu du tri: %f sec \n" ,temps);
+    printf("Temps cpu du tri: %f sec \n", temps);
     //printf("\nTableau trié : \n\n");
     //afficherString(tabstring);
 
@@ -79,9 +71,8 @@ int main()
 }
 
 // Tri rapide
-void tri_rapide(tableaustring tab, int debut, int fin, int ordre)
+void tri_rapide(tableau tab, int debut, int fin, int ordre, unsigned long *nbComparaison, unsigned long *nbPermutations)
 {
-    int comparaison; // Négatif quand le premier élément du strcmp est supérieur au second, positif dans le cas inverse et nul sinon
     int pivot, i, j;
     if (debut < fin)
     {
@@ -94,140 +85,82 @@ void tri_rapide(tableaustring tab, int debut, int fin, int ordre)
             if (ordre == 0)
             {
                 // Approche jusqu'au pivot
-                comparaison = strcmp(tab[i], tab[pivot]);
-                while (((comparaison < 0) || (comparaison == 0)) && (i < fin))
+                while (tab[i] <= tab[pivot] && i < fin)
                 {
                     i++;
-                    comparaison = strcmp(tab[i], tab[pivot]);
+                    *nbComparaison = *nbComparaison + 1;
                 }
+                *nbComparaison = *nbComparaison + 1;
+
                 // Approche juste avant le pivot
-                comparaison = strcmp(tab[j], tab[pivot]);
-                while (comparaison > 0)
+                while (tab[j] > tab[pivot])
                 {
                     j--;
-                    comparaison = strcmp(tab[j], tab[pivot]);
+                    *nbComparaison = *nbComparaison + 1;
                 }
+                *nbComparaison = *nbComparaison + 1;
             }
             // Ordre décroissant
             else
             {
                 // Approche jusqu'au pivot
-                comparaison = strcmp(tab[i], tab[pivot]);
-                while (((comparaison > 0) || (comparaison == 0)) && (i < fin))
+                while (tab[i] >= tab[pivot] && i < fin)
                 {
                     i++;
-                    comparaison = strcmp(tab[i], tab[pivot]);
+                    *nbComparaison = *nbComparaison + 1;
                 }
+                *nbComparaison = *nbComparaison + 1;
 
                 // Approche juste avant le pivot
-                comparaison = strcmp(tab[j], tab[pivot]);
-                while (comparaison < 0)
+                while (tab[j] < tab[pivot])
                 {
                     j--;
-                    comparaison = strcmp(tab[j], tab[pivot]);
+                    *nbComparaison = *nbComparaison + 1;
                 }
+                *nbComparaison = *nbComparaison + 1;
             }
             if (i < j)
             {
                 permutation(tab, i, j);
+                *nbPermutations = *nbPermutations + 1;
             }
         }
 
         permutation(tab, pivot, j);
-        tri_rapide(tab, debut, j - 1, ordre);
-        tri_rapide(tab, j + 1, fin, ordre);
+        *nbPermutations = *nbPermutations + 1;
+        tri_rapide(tab, debut, j - 1, ordre, &nbComparaison, &nbPermutations);
+        tri_rapide(tab, j + 1, fin, ordre, &nbComparaison, &nbPermutations);
     }
 }
-
 // Permutation de deux éléments
-void permutation(tableaustring tab, int a, int b)
+void permutation(tableau tab, int a, int b)
 {
-    char tmp[11];
-    strcpy(tmp, tab[a]);
-    strcpy(tab[a], tab[b]);
-    strcpy(tab[b], tmp);
+    int tmp;
+    tmp = tab[a];
+    tab[a] = tab[b];
+    tab[b] = tmp;
 }
 
-// Affichage d'un tableau de chaînes de carractères
-void afficherString(tableaustring tab)
+// Affichage d'un tableau
+void afficher(tableau tab)
 {
-    for (int i = 0; i < TAB_STRING; i++)
+    for (int i = 0; i < TAB_MAX; i++)
     {
-        if (strcmp(tab[i], "          ") != 0)
-        {
-            printf("%s", tab[i]);
-            printf("\n");
-        }
+        printf("%d ", tab[i]);
     }
+    printf("\n");
 }
 
 // Fonction de remplissage aléatoire
-void creationTableauAlea(tableau tab)
+void creationTableauAlea(tableau tab, int taille)
 {
-    for (int i = 0; i < TAB_MAX; i++)
+    for (int i = 0; i < taille; i++)
     {
         int nb;
         do
         {
-            nb = rand() % 122;
-        } while (nb < 97);
+            nb = rand() % RAND_MAX;
+        } while (nb == 0);
         tab[i] = nb;
-    }
-}
-
-void convertToChar(tableau tab, tableauchar tabchar)
-{
-    for (int i = 0; i < TAB_MAX; i++)
-    {
-        tabchar[i] = tab[i];
-    }
-}
-
-void concatenateChar(tableauchar tabchar, tableaustring tabstring)
-{
-    // Génération d'un chiffre
-    int nb;
-    int pointeur;
-    int count;
-    int j;
-    int ind;
-    count = 0;
-    pointeur = 0;
-    ind = 0;
-    for (int i = 0; i < TAB_MAX; i++)
-    {
-        do
-        {
-            nb = rand() % 10;
-        } while (nb < 5);
-
-        ind = 0;
-        if ((pointeur + nb) > TAB_MAX)
-        {
-            for (int j = pointeur; j < TAB_MAX; j++)
-            {
-                tabstring[count][ind] = tabchar[j];
-                ind = ind + 1;
-            }
-        }
-        else
-        {
-            for (j = pointeur; j < (pointeur + nb); j++)
-            {
-                tabstring[count][ind] = tabchar[j];
-                ind = ind + 1;
-            }
-        }
-        pointeur = pointeur + nb;
-        count = count + 1;
-    }
-}
-
-// Fonction pour remplir les cases vides d'un tableau par des espaces
-void init(tableaustring tabstring)
-{
-    for (int i = 0; i < TAB_STRING; i++)
-    {
-        strcpy(tabstring[i], "          ");
     }
 }
