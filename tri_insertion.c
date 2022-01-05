@@ -3,7 +3,7 @@
 #include <string.h>
 #include <time.h>
 // Taille maximale des tableaux d'entiers
-#define TAB_MAX 100000
+#define TAB_MAX 500000
 
 typedef int tableau[TAB_MAX];
 
