@@ -23,10 +23,10 @@ int main()
     int ordre;                    // Croissant : 0, Décroissant : 1
     double temps;                 // Temps cpu du tri
     unsigned long nbComparaison;  // Nombre de comparaisons
-    unsigned long nbPermutations; // Nombre de permutations
+    unsigned long nbPermutation; // Nombre de permutations
 
     nbComparaison = 0;
-    nbPermutations = 0;
+    nbPermutation = 0;
 
     printf("Entrez l'ordre de tri :\n");
     printf("\t0 - Croissant\n");
@@ -39,7 +39,7 @@ int main()
     //afficherString(tabstring);
 
     clock_t begin = clock(); // Enregistrement du temps de début
-    tri_rapide(tab, 0, TAB_MAX, ordre, &nbComparaison, &nbPermutations);
+    tri_rapide(tab, 0, TAB_MAX, ordre, &nbComparaison, &nbPermutation);
     clock_t end = clock();                          // Enregistrement du temps de fin
     temps = (double)(end - begin) / CLOCKS_PER_SEC; // Calcul du temps d'exécution
     printf("Temps cpu du tri: %f sec \n", temps);
@@ -71,7 +71,7 @@ int main()
 }
 
 // Tri rapide
-void tri_rapide(tableau tab, int debut, int fin, int ordre, unsigned long *nbComparaison, unsigned long *nbPermutations)
+void tri_rapide(tableau tab, int debut, int fin, int ordre, unsigned long *nbComparaison, unsigned long *nbPermutation)
 {
     int pivot, i, j;
     if (debut < fin)
@@ -122,14 +122,14 @@ void tri_rapide(tableau tab, int debut, int fin, int ordre, unsigned long *nbCom
             if (i < j)
             {
                 permutation(tab, i, j);
-                *nbPermutations = *nbPermutations + 1;
+                *nbPermutation = *nbPermutation + 1;
             }
         }
 
         permutation(tab, pivot, j);
-        *nbPermutations = *nbPermutations + 1;
-        tri_rapide(tab, debut, j - 1, ordre, &nbComparaison, &nbPermutations);
-        tri_rapide(tab, j + 1, fin, ordre, &nbComparaison, &nbPermutations);
+        *nbPermutation = *nbPermutation + 1;
+        tri_rapide(tab, debut, j - 1, ordre, &nbComparaison, &nbPermutation);
+        tri_rapide(tab, j + 1, fin, ordre, &nbComparaison, &nbPermutation);
     }
 }
 // Permutation de deux éléments

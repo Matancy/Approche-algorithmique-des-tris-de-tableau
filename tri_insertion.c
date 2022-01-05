@@ -22,10 +22,10 @@ int main()
     int ordre;          // Croissant : 0; Décroissant : 1
     double temps;       // Temps cpu du tri
     unsigned long nbComparaison;  // Nombre de comparaisons
-    unsigned long nbPermutations; // Nombre de permutations
+    unsigned long nbPermutation; // Nombre de permutations
 
     nbComparaison = 0;
-    nbPermutations = 0;
+    nbPermutation = 0;
 
     printf("Entrez l'ordre de tri :\n");
     printf("\t0 - Croissant\n");
@@ -38,14 +38,14 @@ int main()
     //afficherString(tabstring);
 
     clock_t begin = clock(); // On enregistre l'heure dans une variable nommée begin
-    tri_insertion(tab, ordre, &nbComparaison, &nbPermutations);
+    tri_insertion(tab, ordre, &nbComparaison, &nbPermutation);
     clock_t end = clock();                          // On enregitre de nouveau l'heure dans une seconde variable nommée end
     temps = (double)(end - begin) / CLOCKS_PER_SEC; // Calcul de la différence entre l'heure au début du tri et l'heure à la fin du tri
     //printf("\nTableau trié : \n\n");
     // afficherString(tabstring);
     printf("Temps cpu du tri: %f sec \n", temps);
     printf("Nombre de comparaisons : %lu \n", nbComparaison);
-    printf("Nombre de permutations : %lu \n", nbPermutations);
+    printf("Nombre de permutations : %lu \n", nbPermutation);
 
     // printf("Tableau favorable :\n");
     // afficher(favorable);
