@@ -3,8 +3,8 @@
 #include <stdbool.h>
 #include <time.h>
 #include <string.h>
-#define TAB_MAX 1000000   // Taille maximale des tableaux d'entiers et de caractères.
-#define TAB_STRING 100000 // Taille maximale du tableau de chaînes de caractères. 
+#define TAB_MAX 1500000   // Taille maximale des tableaux d'entiers et de caractères.
+#define TAB_STRING 150000 // Taille maximale du tableau de chaînes de caractères. 
                           // La taille est de 10 car le premier tableau d'entiers donne, après convertion, un tableau d'environ 50 carractères qui donne, après concaténation, un tableau de 10 chaînes de caractères.
                           // Les caractères sont concaténés entre eux pour donner des chaînes dont la taille est comprise entre 5 et 10. Ce qui donne un tableau de 10 carractères au minimum.
 
@@ -47,10 +47,10 @@ int main()
     //printf("\nTableau intial : \n\n");
     //afficherString(tabstring);
 
-    clock_t begin = clock(); // On enregistre l'heure dans une variable nommée begin
+    clock_t begin = clock(); // Enregistrement de l'heure de début
     tri_rapide(tabstring, 0, TAB_STRING, ordre, &nbrCompare, &nbrInverse);
-    clock_t end = clock(); // On enregitre de nouveau l'heure dans une seconde variable nommée end
-    temps = (double)(end - begin) / CLOCKS_PER_SEC; // Calcul de la différence entre l'heure au début du tri et l'heure à la fin du tri
+    clock_t end = clock(); // Enregistrement de l'heure de fin
+    temps = (double)(end - begin) / CLOCKS_PER_SEC; // Enregistrement de l'heure de fin
     printf("Temps cpu du tri: %f sec \n\n" ,temps);
     printf("Nombre de comparaisons: %d\n\n" ,nbrCompare);
     printf("Nombre de permutations: %d\n\n" ,nbrInverse);

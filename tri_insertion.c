@@ -3,11 +3,11 @@
 #include <string.h>
 #include <time.h>
 // Taille maximale des tableaux d'entiers et de caracteres.
-#define TAB_MAX 10000
+#define TAB_MAX 1500000
 // Taille maximale du tableau de chaines de caractères.
 // La taille est de 10 car le premier tableau d'entiers donne, après convertion, un tableau d'environ 50 carractères qui donne, après concaténation, un tableau de 10 chaînes de caractères.
 // Les caractères sont concaténés entre eux pour donner des chaînes dont la taille est comprise entre 5 et 10. Ce qui donne un tableau de 10 carractères au minimum.
-#define TAB_STRING 1000
+#define TAB_STRING 150000
 
 typedef int tableau[TAB_MAX];
 typedef char tableauchar[TAB_MAX];
@@ -52,10 +52,10 @@ int main()
     //printf("\nTableau initial : \n\n");
     //afficherString(tabstring);
 
-    clock_t begin = clock(); // On enregistre l'heure dans une variable nommée begin
+    clock_t begin = clock(); // Enregistrement de l'heure de début
     tri_insertion(tabstring, ordre, &nbComparaison, &nbPermutations);
-    clock_t end = clock();                          // On enregitre de nouveau l'heure dans une seconde variable nommée end
-    temps = (double)(end - begin) / CLOCKS_PER_SEC; // Calcul de la différence entre l'heure au début du tri et l'heure à la fin du tri
+    clock_t end = clock();   // Enregistrement de l'heure de fin
+    temps = (double)(end - begin) / CLOCKS_PER_SEC; // Calcul de la différence entre l'heure de début et l'heure de fin
     //printf("\nTableau trié : \n\n");
     // afficherString(tabstring);
     printf("Temps cpu du tri: %f sec \n", temps);
@@ -132,6 +132,10 @@ void tri_insertion(tableaustring t, int ordre, int *nbComparaison, int *nbPermut
                     *nbComparaison = *nbComparaison + 1;
                 }
             }
+        }
+        else
+        {
+            *nbComparaison = *nbComparaison + 1;
         }
     }
 }
