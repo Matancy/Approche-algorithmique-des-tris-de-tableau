@@ -7,7 +7,7 @@
 
 typedef int tableau[TAB_MAX];
 
-void tri_rapide(tableau, int, int, int, unsigned long *, unsigned long *);
+void tri_rapide(tableau, int, int, int, int *, int *);
 void permutation(tableau, int, int);
 void afficher(tableau);
 void creationTableauAlea(tableau, int);
@@ -15,15 +15,13 @@ void creationTableauAlea(tableau, int);
 int main()
 {
     srand(time(NULL)); // Définition pour la fonction aléatoire
-    // tableau normal = {12, 45, 2, 4, 23, 90, 65, 45, 99, 19};
-    // tableau favorable = {1, 3, 5, 6, 8, 9, 12, 34, 56, 78};
-    // tableau nonfavorable = {78, 56, 34, 12, 9, 8, 6, 5, 3, 1};
+
     tableau tab;
 
-    int ordre;                    // Croissant : 0, Décroissant : 1
-    double temps;                 // Temps cpu du tri
-    unsigned long nbComparaison;  // Nombre de comparaisons
-    unsigned long nbPermutation; // Nombre de permutations
+    int ordre;         // Croissant : 0, Décroissant : 1
+    double temps;      // Temps cpu du tri
+    int nbComparaison; // Nombre de comparaisons
+    int nbPermutation; // Nombre de permutations
 
     nbComparaison = 0;
     nbPermutation = 0;
@@ -42,38 +40,18 @@ int main()
     tri_rapide(tab, 0, TAB_MAX, ordre, &nbComparaison, &nbPermutation);
     clock_t end = clock();                          // Enregistrement du temps de fin
     temps = (double)(end - begin) / CLOCKS_PER_SEC; // Calcul du temps d'exécution
+
     printf("Temps cpu du tri: %f sec \n", temps);
-    printf("Nombre de comparaisons : %lu \n", nbComparaison);
-    printf("Nombre de permutations : %lu \n", nbPermutation);
+    printf("Nombre de comparaisons : %d \n", nbComparaison);
+    printf("Nombre de permutations : %d \n", nbPermutation);
     //printf("\nTableau trié : \n\n");
     //afficherString(tabstring);
-
-    // printf("Tableau normal : \n");
-    // afficher(normal);
-    // printf("Tableau trie : \n");
-    // tri_rapide(normal, 0, TAB_MAX - 1, ordre);
-    // afficher(normal);
-    // printf("\n\n");
-
-    // printf("Tableau favorable :\n");
-    // afficher(favorable);
-    // tri_rapide(favorable, 0, TAB_MAX - 1, ordre);
-    // printf("Tableau trie :\n");
-    // afficher(favorable);
-    // printf("\n\n");
-
-    // printf("Tableau non favorable :\n");
-    // afficher(nonfavorable);
-    // tri_rapide(nonfavorable, 0, TAB_MAX - 1, ordre);
-    // printf("Tableau trie :\n");
-    // afficher(nonfavorable);
-    // printf("\n\n");
 
     return EXIT_SUCCESS;
 }
 
 // Tri rapide
-void tri_rapide(tableau tab, int debut, int fin, int ordre, unsigned long *nbComparaison, unsigned long *nbPermutation)
+void tri_rapide(tableau tab, int debut, int fin, int ordre, int *nbComparaison, int *nbPermutation)
 {
     int pivot, i, j;
     if (debut < fin)
