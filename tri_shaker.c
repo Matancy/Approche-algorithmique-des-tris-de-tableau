@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdbool.h>
 #include <time.h>
 #include <string.h>
 #define TAB_MAX 500000 // Taille maximale des tableaux d'entiers
@@ -13,13 +14,11 @@ void creationTableauAlea(tableau, int);
 int main()
 {
     srand(time(NULL)); // Définition pour la fonction aléatoire
-    // tableau favorable = {1, 3, 5, 6, 8, 9, 12, 34, 56, 78};
-    // tableau nonfavorable = {78, 56, 34, 12, 9, 8, 6, 5, 3, 1};
-    // tableau normal = {12, 45, 2, 4, 23, 90, 65, 45, 99, 19};
+
     tableau tab;
 
     int ordre;                   // Ordre croissant 0 ou décroissant 1
-    unsigned long temps;                // Temps cpu du tri
+    double temps;                // Temps cpu du tri
     unsigned long nbComparaison; // Nombre de comparaisons
     unsigned long nbPermutation; // Nombre de permutations
 
@@ -33,42 +32,20 @@ int main()
 
     creationTableauAlea(tab, TAB_MAX); // Création d'un tableau d'entiers
     printf("\n\n\tTRI SHAKER\n\n");
-
-    clock_t end = clock(); // On enregistre l'heure dans une variable nommée begin
-    tri_shaker(tab, ordre, &nbComparaison, &nbPermutation);
-    clock_t begin = clock();                        // On enregitre de nouveau l'heure dans une seconde variable nommée end
-    temps = (double)(end - begin) / CLOCKS_PER_SEC; // Calcul de la différence entre l'heure au début du tri et l'heure à la fin du tri
-    printf("Temps cpu du tri: %lu sec \n", temps);
-    printf("Nombre de comparaisons : %lu \n", nbComparaison);
-    printf("Nombre de permutations : %lu \n", nbPermutation);
     //printf("\nTableau initial : \n\n");
     //afficherString(tabstring);
+
+    clock_t begin = clock(); // Enregistrement du temps de début
+    tri_shaker(tab, ordre, &nbComparaison, &nbPermutation);
+    clock_t end = clock();                          // Enregistrement de l'heure de fin
+    temps = (double)(end - begin) / CLOCKS_PER_SEC; // Calcul du temps d'exécution
+
+    printf("Temps cpu du tri: %f sec \n", temps);
+    printf("Nombre de comparaisons : %lu \n", nbComparaison);
+    printf("Nombre de permutations : %lu \n", nbPermutation);
     //printf("\nTableau trié : \n\n");
     //afficherString(tabstring);
 
-    // Tri favorable
-    // printf("Tableau initial favorable : \n");
-    // afficher(favorable);
-    // tri_shaker(favorable, ordre);
-    // printf("Tableau trie : \n");
-    // afficher(favorable);
-    // printf("\n\n");
-
-    // // Tri non favorable
-    // printf("Tableau initial non favorable : \n");
-    // afficher(nonfavorable);
-    // tri_shaker(nonfavorable, ordre);
-    // printf("Tableau trie : \n");
-    // afficher(nonfavorable);
-    // printf("\n\n");
-
-    // // Tri normal
-    // printf("Tableau initial normal : \n");
-    // afficher(normal);
-    // tri_shaker(normal, ordre);
-    // printf("Tableau trie : \n");
-    // afficher(normal);
-    // printf("\n\n");
     return EXIT_SUCCESS;
 }
 
@@ -98,7 +75,7 @@ void tri_shaker(tableau tab, int ordre_des_donnees, unsigned long *nbComparaison
                 // Si la première valeur est plus petite, on inverse les deux
                 inversion(tab, count + 1, count);
                 *nbPermutation = *nbPermutation + 1;
-            } 
+            }
             // Incrémentation du compteur
             count = count + 1;
             *nbComparaison = *nbComparaison + 1;
