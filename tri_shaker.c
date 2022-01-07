@@ -3,8 +3,8 @@
 #include <time.h>
 #include <string.h>
 #include<limits.h>
-#define TAB_MAX 150000    // Taille maximale des tableaux d'entiers et de caractères.
-#define TAB_STRING 15000  // Erreur de segmentation quand TAB_STRING = 15000
+// #define TAB_MAX 150000    // Taille maximale des tableaux d'entiers et de caractères.
+// #define TAB_STRING 15000  // Erreur de segmentation quand TAB_STRING = 15000
 // Taille maximale du tableau de chaînes de caractères.
 // La taille est de 10 car le premier tableau d'entiers donne, après convertion, un tableau d'environ 50 carractères qui donne, après concaténation, un tableau de 10 chaînes de caractères.
 // Les caractères sont concaténés entre eux pour donner des chaînes dont la taille est comprise entre 5 et 10. Ce qui donne un tableau de 10 carractères au minimum
@@ -13,7 +13,7 @@ typedef int tableau[TAB_MAX];
 typedef char tableauchar[TAB_MAX];
 typedef char tableaustring[TAB_STRING][11];
 
-void tri_shaker(tableaustring, int, int *, int *);
+void tri_shaker(tableaustring, int, unsigned long *, unsigned long *);
 void inversion(tableaustring, int, int);
 void creationTableauAlea(tableau);
 void afficherString(tableaustring);
@@ -21,69 +21,69 @@ void convertToChar(tableau, tableauchar);
 void concatenateChar(tableauchar, tableaustring);
 void init(tableaustring);
 
-int main()
-{
-    srand(time(NULL)); // Définition pour la fonction aléatoire
-    // tableau favorable = {1, 3, 5, 6, 8, 9, 12, 34, 56, 78};
-    // tableau nonfavorable = {78, 56, 34, 12, 9, 8, 6, 5, 3, 1};
-    // tableau normal = {12, 45, 2, 4, 23, 90, 65, 45, 99, 19};
-    int ordre; // Ordre croissant 0 ou décroissant 1
-    double temps; // Temps cpu du tri
-    int nbrCompare = 0; // Compte le nombre de comparaisons
-    int nbrInverse = 0; // Compte le nombre d'inversions
-    tableau tab;
-    tableauchar tabchar;
-    tableaustring tabstring;
-    printf("Entrez l'ordre de tri : \n");
-    printf("\t 0 - Croissant \n");
-    printf("\t 1 - Decroissant \n");
-    scanf("%d", &ordre);
+// int main()
+// {
+//     srand(time(NULL)); // Définition pour la fonction aléatoire
+//     // tableau favorable = {1, 3, 5, 6, 8, 9, 12, 34, 56, 78};
+//     // tableau nonfavorable = {78, 56, 34, 12, 9, 8, 6, 5, 3, 1};
+//     // tableau normal = {12, 45, 2, 4, 23, 90, 65, 45, 99, 19};
+//     int ordre; // Ordre croissant 0 ou décroissant 1
+//     double temps; // Temps cpu du tri
+//     int nbrCompare = 0; // Compte le nombre de comparaisons
+//     int nbrInverse = 0; // Compte le nombre d'inversions
+//     tableau tab;
+//     tableauchar tabchar;
+//     tableaustring tabstring;
+//     printf("Entrez l'ordre de tri : \n");
+//     printf("\t 0 - Croissant \n");
+//     printf("\t 1 - Decroissant \n");
+//     scanf("%d", &ordre);
     
-    init(tabstring);                     // Initialisation d'un tableau de chaînes de caractères
-    creationTableauAlea(tab);            // Création d'un tableau d'entiers
-    convertToChar(tab, tabchar);         // Création d'un tableau de carractères compris entre a et z, à partir du tableu d'entiers
-    concatenateChar(tabchar, tabstring); // Création d'un tableau de chaînes de carractères
-    printf("\n\n\tTRI SHAKER\n\n");
+//     init(tabstring);                     // Initialisation d'un tableau de chaînes de caractères
+//     creationTableauAlea(tab);            // Création d'un tableau d'entiers
+//     convertToChar(tab, tabchar);         // Création d'un tableau de carractères compris entre a et z, à partir du tableu d'entiers
+//     concatenateChar(tabchar, tabstring); // Création d'un tableau de chaînes de carractères
+//     printf("\n\n\tTRI SHAKER\n\n");
     
-    clock_t begin = clock(); // Enregistrement de l'heure de début
-    tri_shaker(tabstring, ordre, &nbrCompare, &nbrInverse);
-    clock_t end = clock(); // Enregistrement de l'heure de fin
-    temps = (double)(end - begin) / CLOCKS_PER_SEC; // Calcul de la différence entre l'heure au début et l'heure fin
-    printf("Temps cpu du tri: %f sec \n\n" ,temps);
-    printf("Nombre de comparaisons: %d \n\n" ,nbrCompare);
-    printf("Nombre de permutations: %d \n\n" ,nbrInverse);
-    //printf("\nTableau initial : \n\n");
-    //afficherString(tabstring);
-    //printf("\nTableau trié : \n\n");
-    //afficherString(tabstring);
+//     clock_t begin = clock(); // Enregistrement de l'heure de début
+//     tri_shaker(tabstring, ordre, &nbrCompare, &nbrInverse);
+//     clock_t end = clock(); // Enregistrement de l'heure de fin
+//     temps = (double)(end - begin) / CLOCKS_PER_SEC; // Calcul de la différence entre l'heure au début et l'heure fin
+//     printf("Temps cpu du tri: %f sec \n\n" ,temps);
+//     printf("Nombre de comparaisons: %d \n\n" ,nbrCompare);
+//     printf("Nombre de permutations: %d \n\n" ,nbrInverse);
+//     //printf("\nTableau initial : \n\n");
+//     //afficherString(tabstring);
+//     //printf("\nTableau trié : \n\n");
+//     //afficherString(tabstring);
 
-    // Tri favorable
-    // printf("Tableau initial favorable : \n");
-    // afficher(favorable);
-    // tri_shaker(favorable, ordre);
-    // printf("Tableau trie : \n");
-    // afficher(favorable);
-    // printf("\n\n");
+//     // Tri favorable
+//     // printf("Tableau initial favorable : \n");
+//     // afficher(favorable);
+//     // tri_shaker(favorable, ordre);
+//     // printf("Tableau trie : \n");
+//     // afficher(favorable);
+//     // printf("\n\n");
 
-    // // Tri non favorable
-    // printf("Tableau initial non favorable : \n");
-    // afficher(nonfavorable);
-    // tri_shaker(nonfavorable, ordre);
-    // printf("Tableau trie : \n");
-    // afficher(nonfavorable);
-    // printf("\n\n");
+//     // // Tri non favorable
+//     // printf("Tableau initial non favorable : \n");
+//     // afficher(nonfavorable);
+//     // tri_shaker(nonfavorable, ordre);
+//     // printf("Tableau trie : \n");
+//     // afficher(nonfavorable);
+//     // printf("\n\n");
 
-    // // Tri normal
-    // printf("Tableau initial normal : \n");
-    // afficher(normal);
-    // tri_shaker(normal, ordre);
-    // printf("Tableau trie : \n");
-    // afficher(normal);
-    // printf("\n\n");
-    return EXIT_SUCCESS;
-}
+//     // // Tri normal
+//     // printf("Tableau initial normal : \n");
+//     // afficher(normal);
+//     // tri_shaker(normal, ordre);
+//     // printf("Tableau trie : \n");
+//     // afficher(normal);
+//     // printf("\n\n");
+//     return EXIT_SUCCESS;
+// }
 
-void tri_shaker(tableaustring tab, int ordre_des_donnees, int *nbrCompare, int *nbrInverse)
+void tri_shaker(tableaustring tab, int ordre_des_donnees, unsigned long *nbrCompare, unsigned long *nbrInverse)
 {
     int indMin, indMax, count, order;
     indMin = 0;              // Indice du min trié dans le tableau
@@ -173,95 +173,95 @@ void tri_shaker(tableaustring tab, int ordre_des_donnees, int *nbrCompare, int *
     }
 }
 
-// Inversion de deux valeurs
-void inversion(tableaustring tab, int val1, int val2)
-{
-    char tmp[11];
-    strcpy(tmp, tab[val2]);
-    strcpy(tab[val2], tab[val1]);
-    strcpy(tab[val1], tmp);
-}
+// // Inversion de deux valeurs
+// void inversion(tableaustring tab, int val1, int val2)
+// {
+//     char tmp[11];
+//     strcpy(tmp, tab[val2]);
+//     strcpy(tab[val2], tab[val1]);
+//     strcpy(tab[val1], tmp);
+// }
 
-// Affichage d'un tableau de chaînes de carractères
-void afficherString(tableaustring tab)
-{
-    for (int i = 0; i < TAB_STRING; i++)
-    {
-        if (strcmp(tab[i], "          ") != 0)
-        {
-            printf("%s", tab[i]);
-            printf("\n");
-        }
-    }
-}
+// // Affichage d'un tableau de chaînes de carractères
+// void afficherString(tableaustring tab)
+// {
+//     for (int i = 0; i < TAB_STRING; i++)
+//     {
+//         if (strcmp(tab[i], "          ") != 0)
+//         {
+//             printf("%s", tab[i]);
+//             printf("\n");
+//         }
+//     }
+// }
 
-// Fonction de remplissage aléatoire
-void creationTableauAlea(tableau tab)
-{
-    for (int i = 0; i < TAB_MAX; i++)
-    {
-        int nb;
-        do
-        {
-            nb = rand() % 122;
-        } while (nb < 97);
-        tab[i] = nb;
-    }
-}
+// // Fonction de remplissage aléatoire
+// void creationTableauAlea(tableau tab)
+// {
+//     for (int i = 0; i < TAB_MAX; i++)
+//     {
+//         int nb;
+//         do
+//         {
+//             nb = rand() % 122;
+//         } while (nb < 97);
+//         tab[i] = nb;
+//     }
+// }
 
-void convertToChar(tableau tab, tableauchar tabchar)
-{
-    for (int i = 0; i < TAB_MAX; i++)
-    {
-        tabchar[i] = tab[i];
-    }
-}
+// void convertToChar(tableau tab, tableauchar tabchar)
+// {
+//     for (int i = 0; i < TAB_MAX; i++)
+//     {
+//         tabchar[i] = tab[i];
+//     }
+// }
 
-void concatenateChar(tableauchar tabchar, tableaustring tabstring)
-{
-    // Génération d'un chiffre
-    int nb;
-    int pointeur;
-    int count;
-    int j;
-    int ind;
-    count = 0;
-    pointeur = 0;
-    ind = 0;
-    for (int i = 0; i < TAB_MAX; i++)
-    {
-        do
-        {
-            nb = rand() % 10;
-        } while (nb < 5);
+// void concatenateChar(tableauchar tabchar, tableaustring tabstring)
+// {
+//     // Génération d'un chiffre
+//     int nb;
+//     int pointeur;
+//     int count;
+//     int j;
+//     int ind;
+//     count = 0;
+//     pointeur = 0;
+//     ind = 0;
+//     for (int i = 0; i < TAB_MAX; i++)
+//     {
+//         do
+//         {
+//             nb = rand() % 10;
+//         } while (nb < 5);
 
-        ind = 0;
-        if ((pointeur + nb) > TAB_MAX)
-        {
-            for (int j = pointeur; j < TAB_MAX; j++)
-            {
-                tabstring[count][ind] = tabchar[j];
-                ind = ind + 1;
-            }
-        }
-        else
-        {
-            for (j = pointeur; j < (pointeur + nb); j++)
-            {
-                tabstring[count][ind] = tabchar[j];
-                ind = ind + 1;
-            }
-        }
-        pointeur = pointeur + nb;
-        count = count + 1;
-    }
-}
+//         ind = 0;
+//         if ((pointeur + nb) > TAB_MAX)
+//         {
+//             for (int j = pointeur; j < TAB_MAX; j++)
+//             {
+//                 tabstring[count][ind] = tabchar[j];
+//                 ind = ind + 1;
+//             }
+//         }
+//         else
+//         {
+//             for (j = pointeur; j < (pointeur + nb); j++)
+//             {
+//                 tabstring[count][ind] = tabchar[j];
+//                 ind = ind + 1;
+//             }
+//         }
+//         pointeur = pointeur + nb;
+//         count = count + 1;
+//     }
+// }
 
-// Fonction pour remplir les cases vides d'un tableau par des espaces
-void init(tableaustring tabstring)
-{
-    for (int i = 0; i < TAB_STRING; i++)
-    {
-        strcpy(tabstring[i], "          ");
-    }
-}
+// // Fonction pour remplir les cases vides d'un tableau par des espaces
+// void init(tableaustring tabstring)
+// {
+//     for (int i = 0; i < TAB_STRING; i++)
+//     {
+//         strcpy(tabstring[i], "          ");
+//     }
+// }
