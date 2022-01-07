@@ -3,10 +3,11 @@
 #include <stdbool.h>
 #include <time.h>
 #include <string.h>
-#define TAB_MAX 1500000   // Taille maximale des tableaux d'entiers et de caractères.
-#define TAB_STRING 150000 // Taille maximale du tableau de chaînes de caractères. 
-                          // La taille est de 10 car le premier tableau d'entiers donne, après convertion, un tableau d'environ 50 carractères qui donne, après concaténation, un tableau de 10 chaînes de caractères.
-                          // Les caractères sont concaténés entre eux pour donner des chaînes dont la taille est comprise entre 5 et 10. Ce qui donne un tableau de 10 carractères au minimum.
+#define TAB_MAX 150000   // Taille maximale des tableaux d'entiers et de caractères.
+#define TAB_STRING 15000 // Erreur de segmentation quand TAB_STRING = 15000
+// Taille maximale du tableau de chaînes de caractères. 
+// La taille est de 10 car le premier tableau d'entiers donne, après convertion, un tableau d'environ 50 carractères qui donne, après concaténation, un tableau de 10 chaînes de caractères.
+// Les caractères sont concaténés entre eux pour donner des chaînes dont la taille est comprise entre 5 et 10. Ce qui donne un tableau de 10 carractères au minimum.
 
 typedef int tableau[TAB_MAX];
 typedef char tableauchar[TAB_MAX];
@@ -159,7 +160,8 @@ void permutation(tableaustring tab, int a, int b)
 // Affichage d'un tableau de chaînes de carractères
 void afficherString(tableaustring tab)
 {
-    for (int i = 0; i < TAB_STRING; i++)
+    int i;
+    for (i = 0; i < TAB_STRING; i++)
     {
         if (strcmp(tab[i], "          ") != 0)
         {
@@ -172,7 +174,8 @@ void afficherString(tableaustring tab)
 // Fonction de remplissage aléatoire
 void creationTableauAlea(tableau tab)
 {
-    for (int i = 0; i < TAB_MAX; i++)
+    int i;
+    for (i = 0; i < TAB_MAX; i++)
     {
         int nb;
         do
@@ -185,7 +188,8 @@ void creationTableauAlea(tableau tab)
 
 void convertToChar(tableau tab, tableauchar tabchar)
 {
-    for (int i = 0; i < TAB_MAX; i++)
+    int i;
+    for (i = 0; i < TAB_MAX; i++)
     {
         tabchar[i] = tab[i];
     }
@@ -198,11 +202,12 @@ void concatenateChar(tableauchar tabchar, tableaustring tabstring)
     int pointeur;
     int count;
     int j;
+    int i;
     int ind;
     count = 0;
     pointeur = 0;
     ind = 0;
-    for (int i = 0; i < TAB_MAX; i++)
+    for (i = 0; i < TAB_MAX; i++)
     {
         do
         {

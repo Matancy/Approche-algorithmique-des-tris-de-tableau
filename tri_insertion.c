@@ -3,11 +3,11 @@
 #include <string.h>
 #include <time.h>
 // Taille maximale des tableaux d'entiers et de caracteres.
-#define TAB_MAX 1500000
+#define TAB_MAX 150000
 // Taille maximale du tableau de chaines de caractères.
 // La taille est de 10 car le premier tableau d'entiers donne, après convertion, un tableau d'environ 50 carractères qui donne, après concaténation, un tableau de 10 chaînes de caractères.
 // Les caractères sont concaténés entre eux pour donner des chaînes dont la taille est comprise entre 5 et 10. Ce qui donne un tableau de 10 carractères au minimum.
-#define TAB_STRING 150000
+#define TAB_STRING 15000 // Erreur de segmentation quand TAB_STRING = 15000
 
 typedef int tableau[TAB_MAX];
 typedef char tableauchar[TAB_MAX];
