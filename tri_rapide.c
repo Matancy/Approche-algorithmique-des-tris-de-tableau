@@ -7,7 +7,7 @@
 
 typedef int tableau[TAB_MAX];
 
-void tri_rapide(tableau, int, int, int, int *, int *);
+void tri_rapide(tableau, int, int, int, unsigned long *, unsigned long *);
 void permutation(tableau, int, int);
 void afficher(tableau);
 void creationTableauAlea(tableau, int);
@@ -18,10 +18,10 @@ int main()
 
     tableau tab;
 
-    int ordre;         // Croissant : 0, Décroissant : 1
-    double temps;      // Temps cpu du tri
-    int nbComparaison; // Nombre de comparaisons
-    int nbPermutation; // Nombre de permutations
+    int ordre;                   // Croissant : 0, Décroissant : 1
+    double temps;                // Temps cpu du tri
+    unsigned long nbComparaison; // Nombre de comparaisons
+    unsigned long nbPermutation; // Nombre de permutations
 
     nbComparaison = 0;
     nbPermutation = 0;
@@ -42,8 +42,8 @@ int main()
     temps = (double)(end - begin) / CLOCKS_PER_SEC; // Calcul du temps d'exécution
 
     printf("Temps cpu du tri: %f sec \n", temps);
-    printf("Nombre de comparaisons : %d \n", nbComparaison);
-    printf("Nombre de permutations : %d \n", nbPermutation);
+    printf("Nombre de comparaisons : %ld \n", nbComparaison);
+    printf("Nombre de permutations : %ld \n", nbPermutation);
     //printf("\nTableau trié : \n\n");
     //afficherString(tabstring);
 
@@ -51,7 +51,7 @@ int main()
 }
 
 // Tri rapide
-void tri_rapide(tableau tab, int debut, int fin, int ordre, int *nbComparaison, int *nbPermutation)
+void tri_rapide(tableau tab, int debut, int fin, int ordre, unsigned long *nbComparaison, unsigned long *nbPermutation)
 {
     int pivot, i, j;
     if (debut < fin)
@@ -67,7 +67,7 @@ void tri_rapide(tableau tab, int debut, int fin, int ordre, int *nbComparaison, 
                 // Approche jusqu'au pivot
                 while (tab[i] <= tab[pivot] && i < fin)
                 {
-                    i++;
+                    i = i + 1;
                     *nbComparaison = *nbComparaison + 1;
                 }
                 *nbComparaison = *nbComparaison + 1;
@@ -75,7 +75,7 @@ void tri_rapide(tableau tab, int debut, int fin, int ordre, int *nbComparaison, 
                 // Approche juste avant le pivot
                 while (tab[j] > tab[pivot])
                 {
-                    j--;
+                    j = j - 1;
                     *nbComparaison = *nbComparaison + 1;
                 }
                 *nbComparaison = *nbComparaison + 1;
@@ -86,7 +86,7 @@ void tri_rapide(tableau tab, int debut, int fin, int ordre, int *nbComparaison, 
                 // Approche jusqu'au pivot
                 while (tab[i] >= tab[pivot] && i < fin)
                 {
-                    i++;
+                    i = i + 1;
                     *nbComparaison = *nbComparaison + 1;
                 }
                 *nbComparaison = *nbComparaison + 1;
@@ -94,7 +94,7 @@ void tri_rapide(tableau tab, int debut, int fin, int ordre, int *nbComparaison, 
                 // Approche juste avant le pivot
                 while (tab[j] < tab[pivot])
                 {
-                    j--;
+                    j = j - 1;
                     *nbComparaison = *nbComparaison + 1;
                 }
                 *nbComparaison = *nbComparaison + 1;
@@ -108,8 +108,8 @@ void tri_rapide(tableau tab, int debut, int fin, int ordre, int *nbComparaison, 
 
         permutation(tab, pivot, j);
         *nbPermutation = *nbPermutation + 1;
-        tri_rapide(tab, debut, j - 1, ordre, &nbComparaison, &nbPermutation);
-        tri_rapide(tab, j + 1, fin, ordre, &nbComparaison, &nbPermutation);
+        tri_rapide(tab, debut, j - 1, ordre, nbComparaison, nbPermutation);
+        tri_rapide(tab, j + 1, fin, ordre, nbComparaison, nbPermutation);
     }
 }
 // Permutation de deux éléments
