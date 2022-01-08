@@ -3,8 +3,8 @@
 #include <stdbool.h>
 #include <time.h>
 #include <string.h>
-// #define TAB_MAX 150000   // Taille maximale des tableaux d'entiers et de caractères.
-// #define TAB_STRING 15000 // Erreur de segmentation quand TAB_STRING = 15000
+#define TAB_MAX 150000   // Taille maximale des tableaux d'entiers et de caractères.
+#define TAB_STRING 15000 // Erreur de segmentation quand TAB_STRING = 15000
 // Taille maximale du tableau de chaînes de caractères. 
 // La taille est de 10 car le premier tableau d'entiers donne, après convertion, un tableau d'environ 50 carractères qui donne, après concaténation, un tableau de 10 chaînes de caractères.
 // Les caractères sont concaténés entre eux pour donner des chaînes dont la taille est comprise entre 5 et 10. Ce qui donne un tableau de 10 carractères au minimum.
