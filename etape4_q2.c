@@ -31,7 +31,7 @@ int main()
     srand(time(NULL)); // Définition pour la fonction aléatoire
     tableau tab;
     tableauchar tabchar;
-    tableaustring tabstring, tabstring1, tabstring2, tabstring3;
+    tableaustring tabstringInit, tabstringInsert, tabstringShaker, tabstringRapide;
 
     int ordre;          // Croissant : 0; Décroissant : 1
     double temps;       // Temps cpu du tri
@@ -41,45 +41,50 @@ int main()
     nbComparaison = 0;
     nbPermutation = 0;
 
-    printf("Entrez l'ordre de tri :\n");
-    printf("\t0 - Croissant\n");
-    printf("\t1 - Decroissant\n\n");
-    scanf("%d", &ordre);
-
-    init(tabstring1);                     // Initialisation d'un tableau de chaînes de caractères
+    init(tabstringInit);                     // Initialisation d'un tableau de chaînes de caractères
     creationTableauAlea(tab);            // Création d'un tableau d'entiers
     convertToChar(tab, tabchar);         // Création d'un tableau de carractères compris entre a et z, à partir du tableu d'entiers
-    concatenateChar(tabchar, tabstring1); // Création d'un tableau de chaînes de carractères
-    copierTableau(tabstring1, tabstring2);
-    copierTableau(tabstring1, tabstring3); 
+    concatenateChar(tabchar, tabstringInit); // Création d'un tableau de chaînes de carractères
+    copierTableau(tabstringInit, tabstringInsert); // Copie de tabStringInit dans tabstringInsert
+    copierTableau(tabstringInit, tabstringShaker); // Copie de tabstringInit dans tabstringShaker
+    copierTableau(tabstringInit, tabstringRapide); // Copie de tabstringInit dans tabstringRapide
 
     /**************************************
-                TRI INSERTION
+                TRI PAR INSERTION
      **************************************/
     printf("\n\n\tTRI PAR INSERTION\n\n");
 
     /* CAS NORMAL */
     printf("Cas normal:\n\n");
     clock_t begin = clock(); // Enregistrement de l'heure de début
-    tri_insertion(tabstring1, ordre, &nbComparaison, &nbPermutation);
+    tri_insertion(tabstringInsert, 0, &nbComparaison, &nbPermutation); // Tri du tableau par ordre croissant
     clock_t end = clock();   // Enregistrement de l'heure de fin
     temps = (double)(end - begin) / CLOCKS_PER_SEC; // Calcul de la différence entre l'heure de début et l'heure de fin
-    //printf("\nTableau trié : \n\n");
-    // afficherString(tabstring);
     printf("Temps cpu du tri: %f sec \n", temps);
     printf("Nombre de comparaisons : %lu \n", nbComparaison);
     printf("Nombre de permutations : %lu \n\n\n", nbPermutation);
 
-    /* CAS FAVORABLE */
+    nbComparaison = 0; // Initialisation de nbComparaison
+    nbPermutation = 0; // Initialisation de nbPermutation
+    // CAS FAVORABLE 
     printf("Cas favorable:\n\n");
-    tri_rapide(tab, debut, fin, ordre, &nbComparaison, &nbPermutation);
-
-    clock_t begin = clock(); // Enregistrement de l'heure de début
-    tri_insertion(tabstring1, ordre, &nbComparaison, &nbPermutation);
-    clock_t end = clock();   // Enregistrement de l'heure de fin
+    begin = clock(); // Enregistrement de l'heure de début
+    tri_insertion(tabstringInsert, 0, &nbComparaison, &nbPermutation); // Tri du tableau par ordre croissant
+    end = clock();   // Enregistrement de l'heure de fin
     temps = (double)(end - begin) / CLOCKS_PER_SEC; // Calcul de la différence entre l'heure de début et l'heure de fin
-    //printf("\nTableau trié : \n\n");
-    // afficherString(tabstring);
+    printf("Temps cpu du tri: %f sec \n", temps);
+    printf("Nombre de comparaisons : %lu \n", nbComparaison);
+    printf("Nombre de permutations : %lu \n", nbPermutation);
+
+    nbComparaison = 0; // Initialisation de nbComparaison
+    nbPermutation = 0; // Initialisation de nbPermutation
+    // CAS DÉFAVORABLE
+    printf("Cas défavorable:\n\n");
+    tri_rapide(tabstringInsert, 1, TAB_MAX, 0, &nbComparaison, &nbPermutation); // Tri du tableau par ordre décroissant
+    begin = clock(); // Enregistrement de l'heure de début
+    tri_insertion(tabstringInsert, 0, &nbComparaison, &nbPermutation); // Tri du tableau par ordre croissant
+    end = clock();   // Enregistrement de l'heure de fin
+    temps = (double)(end - begin) / CLOCKS_PER_SEC; // Calcul de la différence entre l'heure de début et l'heure de fin
     printf("Temps cpu du tri: %f sec \n", temps);
     printf("Nombre de comparaisons : %lu \n", nbComparaison);
     printf("Nombre de permutations : %lu \n", nbPermutation);
@@ -88,11 +93,42 @@ int main()
     /**************************************
                 TRI SHAKER
      **************************************/
-    nbComparaison = 0;
-    nbPermutation = 0;
+
+    // CAS NORMAL
+    nbComparaison = 0; // Initialisation de nbComparaison
+    nbPermutation = 0; // Initialisation de nbPermutation
     printf("\n\n\tTRI SHAKER\n\n");
+    printf("Cas normal:\n\n");
     begin = clock(); // Enregistrement de l'heure de début
-    tri_shaker(tabstring2, ordre, &nbComparaison, &nbPermutation);
+    tri_shaker(tabstringShaker, 0, &nbComparaison, &nbPermutation); // Tri du tableau par ordre croissant
+    end = clock();   // Enregistrement de l'heure de fin
+    temps = (double)(end - begin) / CLOCKS_PER_SEC; // Calcul de la différence entre l'heure de début et l'heure de fin
+    printf("Temps cpu du tri: %f sec \n", temps);
+    printf("Nombre de comparaisons : %lu \n", nbComparaison);
+    printf("Nombre de permutations : %lu \n", nbPermutation);
+
+    // CAS FAVORABLE
+    nbComparaison = 0; // Initialisation de nbComparaison
+    nbPermutation = 0; // Initialisation de nbPermutation
+    printf("\n\n\tTRI SHAKER\n\n");
+    printf("Cas favorable:\n\n");
+    tri_rapide(tabstringShaker, 0, TAB_MAX, 0, &nbComparaison, &nbPermutation); // Tri du tableau par ordre croissant
+    begin = clock(); // Enregistrement de l'heure de début
+    tri_shaker(tabstringShaker, 0, &nbComparaison, &nbPermutation); // Tri du tableau par ordre croissant
+    end = clock();   // Enregistrement de l'heure de fin
+    temps = (double)(end - begin) / CLOCKS_PER_SEC; // Calcul de la différence entre l'heure de début et l'heure de fin
+    printf("Temps cpu du tri: %f sec \n", temps);
+    printf("Nombre de comparaisons : %lu \n", nbComparaison);
+    printf("Nombre de permutations : %lu \n", nbPermutation);
+
+    // CAS DÉFAVORABLE
+    nbComparaison = 0; // Initialisation de nbComparaison
+    nbPermutation = 0; // Initialisation de nbPermutation
+    printf("\n\n\tTRI SHAKER\n\n");
+    printf("Cas défavorable:\n\n");
+    tri_rapide(tabstringShaker, 1, TAB_MAX, 0, &nbComparaison, &nbPermutation); // Tri du tableau par ordre décroissant
+    begin = clock(); // Enregistrement de l'heure de début
+    tri_shaker(tabstringShaker, 0, &nbComparaison, &nbPermutation); // Tri du tableau par ordre croissant
     end = clock();   // Enregistrement de l'heure de fin
     temps = (double)(end - begin) / CLOCKS_PER_SEC; // Calcul de la différence entre l'heure de début et l'heure de fin
     printf("Temps cpu du tri: %f sec \n", temps);
@@ -103,11 +139,38 @@ int main()
     /**************************************
                 TRI RAPIDE    
      **************************************/
+    nbComparaison = 0; // Initialisation de nbComparaison
+    nbPermutation = 0; // Initialisation de nbPermutation
+    printf("\n\n\tTRI RAPIDE\n\n");
+    // CAS NORMAL
+    printf("Cas normal:");
+    begin = clock(); // Enregistrement de l'heure de début
+    tri_rapide(tabstringRapide, 0, ordre, TAB_STRING, &nbComparaison, &nbPermutation); // Tri du tableau par ordre croissant
+    end = clock();   // Enregistrement de l'heure de fin
+    temps = (double)(end - begin) / CLOCKS_PER_SEC; // Calcul de la différence entre l'heure de début et l'heure de fin
+    printf("Temps cpu du tri: %f sec \n", temps);
+    printf("Nombre de comparaisons : %lu \n", nbComparaison);
+    printf("Nombre de permutations : %lu \n", nbPermutation);
+
+    // CAS FAVORABLE
     nbComparaison = 0;
     nbPermutation = 0;
-    printf("\n\n\tTRI RAPIDE\n\n");
+    printf("Cas favorable:");
     begin = clock(); // Enregistrement de l'heure de début
-    tri_rapide(tabstring3, 0, ordre, TAB_STRING, &nbComparaison, &nbPermutation);
+    tri_rapide(tabstringRapide, 0, ordre, TAB_STRING, &nbComparaison, &nbPermutation); // Tri du tableau par ordre croissant
+    end = clock();   // Enregistrement de l'heure de fin
+    temps = (double)(end - begin) / CLOCKS_PER_SEC; // Calcul de la différence entre l'heure de début et l'heure de fin
+    printf("Temps cpu du tri: %f sec \n", temps);
+    printf("Nombre de comparaisons : %lu \n", nbComparaison);
+    printf("Nombre de permutations : %lu \n", nbPermutation);
+
+    // CAS DÉFAVORABLE
+    nbComparaison = 0;
+    nbPermutation = 0;
+    printf("Cas défavorable:");
+    tri_rapide(tabstringRapide, 1, ordre, TAB_STRING, &nbComparaison, &nbPermutation); // Tri du tableau par ordre décroissant
+    begin = clock(); // Enregistrement de l'heure de début
+    tri_rapide(tabstringRapide, 0, ordre, TAB_STRING, &nbComparaison, &nbPermutation); // Tri du tableau par ordre croissant
     end = clock();   // Enregistrement de l'heure de fin
     temps = (double)(end - begin) / CLOCKS_PER_SEC; // Calcul de la différence entre l'heure de début et l'heure de fin
     printf("Temps cpu du tri: %f sec \n", temps);
@@ -203,12 +266,12 @@ void init(tableaustring tabstring)
     }
 }
 // Copier un tableau dans un autre tableau
-void copierTableau(tableaustring t, tableaustring u)
+void copierTableau(tableaustring destination, tableaustring source)
 {
     int i;
     for (i = 0; i < TAB_STRING; i++)
     {
-        strcpy(u[i], t[i]); 
+        strcpy(destination[i], source[i]); // Copie de destination dans source
     }
 }
 // Inversion de deux valeurs
