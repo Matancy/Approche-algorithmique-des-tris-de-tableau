@@ -33,7 +33,6 @@ int main()
     tableauchar tabchar;
     tableaustring tabstringInit, tabstringInsert, tabstringShaker, tabstringRapide;
 
-    int ordre;          // Croissant : 0; Décroissant : 1
     double temps;       // Temps cpu du tri
     unsigned long nbComparaison;  // Nombre de comparaisons
     unsigned long nbPermutation; // Nombre de permutations
