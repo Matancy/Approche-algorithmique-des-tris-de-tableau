@@ -31,6 +31,8 @@ int main()
     srand(time(NULL)); // Définition pour la fonction aléatoire
     tableau tab;
     tableauchar tabchar;
+    tableaustring tabString;
+    tableaustring template;
     tableaustring tabstringNormalInsert;
     tableaustring tabstringFavoInsert;
     tableaustring tabstringDefaInsert;
@@ -45,28 +47,31 @@ int main()
     unsigned long nbComparaison;  // Nombre de comparaisons
     unsigned long nbPermutation;  // Nombre de permutations
 
-    nbComparaison = 0;
-    nbPermutation = 0;
-
     init(tabstringNormalInsert);      // Initialisation d'un tableau de chaînes de caractères
     creationTableauAlea(tab);         // Création d'un tableau d'entiers
     convertToChar(tab, tabchar);      // Création d'un tableau de carractères compris entre a et z, à partir du tableu d'entiers
+    concatenateChar(tabchar, tabString); // Création d'un tableau de chaînes de carractères
 
+    nbComparaison = 0; // Initialisation de nbComparaison
+    nbPermutation = 0; // Initialisation de nbPermutation
 
+    copierTableau(template, tabString);
     // Cas normal
-    concatenateChar(tabchar, tabstringNormalInsert); // Création d'un tableau de chaînes de carractères
-    copierTableau(tabstringNormalShaker, tabstringNormalInsert);
-    copierTableau(tabstringNormalRapide, tabstringNormalInsert);
+    copierTableau(tabstringNormalInsert, template);
+    copierTableau(tabstringNormalShaker, template);
+    copierTableau(tabstringNormalRapide, template);
 
     // Cas favorable
-    tri_rapide(tabstringFavoInsert, 0, TAB_STRING, 0, &nbComparaison, &nbPermutation); // Tri du tableau par ordre croissant
-    copierTableau(tabstringFavoInsert, tabstringFavoShaker);
-    copierTableau(tabstringFavoInsert, tabstringFavoRapide);
+    tri_rapide(template, 0, TAB_STRING, 0, &nbComparaison, &nbPermutation); // Tri du tableau par ordre croissant
+    copierTableau(tabstringFavoInsert, template);
+    copierTableau(tabstringFavoShaker, template);
+    copierTableau(tabstringFavoRapide, template);
 
     // Cas défavorable
-    tri_rapide(tabstringFavoInsert, 0, TAB_STRING, 1, &nbComparaison, &nbPermutation); // Tri du tableau par ordre décroissant
-    copierTableau(tabstringDefaInsert, tabstringDefaShaker);
-    copierTableau(tabstringDefaInsert, tabstringDefaRapide);
+    tri_rapide(template, 0, TAB_STRING, 1, &nbComparaison, &nbPermutation); // Tri du tableau par ordre décroissant
+    copierTableau(tabstringDefaInsert, template);
+    copierTableau(tabstringDefaShaker, template);
+    copierTableau(tabstringDefaRapide, template);
 
     /**************************************
                 TRI PAR INSERTION
@@ -100,7 +105,7 @@ int main()
     nbComparaison = 0; // Initialisation de nbComparaison
     nbPermutation = 0; // Initialisation de nbPermutation
     // CAS DÉFAVORABLE
-    printf("Cas défavorable:\n\n");
+    printf("Cas defavorable:\n\n");
     begin = clock();   // Enregistrement de l'heure de début
     tri_insertion(tabstringDefaInsert, 0, &nbComparaison, &nbPermutation); // Tri du tableau par ordre croissant
     end = clock();     // Enregistrement de l'heure de fin
@@ -142,7 +147,7 @@ int main()
     // CAS DÉFAVORABLE
     nbComparaison = 0; // Initialisation de nbComparaison
     nbPermutation = 0; // Initialisation de nbPermutation
-    printf("Cas défavorable:\n\n");
+    printf("Cas defavorable:\n\n");
     begin = clock(); // Enregistrement de l'heure de début
     tri_shaker(tabstringDefaShaker, 0, &nbComparaison, &nbPermutation); // Tri du tableau par ordre croissant
     end = clock();   // Enregistrement de l'heure de fin
@@ -183,7 +188,7 @@ int main()
     // CAS DÉFAVORABLE
     nbComparaison = 0;
     nbPermutation = 0;
-    printf("Cas défavorable:\n\n");
+    printf("Cas defavorable:\n\n");
     begin = clock(); // Enregistrement de l'heure de début
     tri_rapide(tabstringDefaRapide, 0, TAB_STRING, 0, &nbComparaison, &nbPermutation); // Tri du tableau par ordre croissant
     end = clock();   // Enregistrement de l'heure de fin
