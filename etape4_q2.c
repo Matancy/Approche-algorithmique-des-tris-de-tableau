@@ -105,7 +105,7 @@ int main()
     nbComparaison = 0; // Initialisation de nbComparaison
     nbPermutation = 0; // Initialisation de nbPermutation
     // CAS DÉFAVORABLE
-    printf("Cas defavorable:\n\n");
+    printf("Cas défavorable:\n\n");
     begin = clock();   // Enregistrement de l'heure de début
     tri_insertion(tabstringDefaInsert, 0, &nbComparaison, &nbPermutation); // Tri du tableau par ordre croissant
     end = clock();     // Enregistrement de l'heure de fin
@@ -147,7 +147,7 @@ int main()
     // CAS DÉFAVORABLE
     nbComparaison = 0; // Initialisation de nbComparaison
     nbPermutation = 0; // Initialisation de nbPermutation
-    printf("Cas defavorable:\n\n");
+    printf("Cas défavorable:\n\n");
     begin = clock(); // Enregistrement de l'heure de début
     tri_shaker(tabstringDefaShaker, 0, &nbComparaison, &nbPermutation); // Tri du tableau par ordre croissant
     end = clock();   // Enregistrement de l'heure de fin
