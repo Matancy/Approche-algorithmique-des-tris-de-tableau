@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
-#define MAX 500000 // Nombre d'entiers à génerer
+#define MAX 17000 // Nombre d'entiers à génerer
 
 typedef int tableau[MAX];
 
@@ -171,8 +171,6 @@ int main()
     printf("Temps cpu du tri: %f sec \n", temps);
     printf("Nombre de comparaisons : %lu \n", nbComparaison);
     printf("Nombre de permutations : %lu \n", nbPermutation);
-    nbComparaison = 0;
-    nbPermutation = 0;
     return EXIT_SUCCESS;
 }
 
@@ -296,7 +294,7 @@ void tri_rapide(tableau tab, int debut, int fin, int ordre, unsigned long *nbCom
             if (ordre == 0)
             {
                 // Approche jusqu'au pivot
-                while (tab[i] <= tab[pivot] && i < fin)
+                while (i < fin && tab[i] <= tab[pivot])
                 {
                     i = i + 1;
                     *nbComparaison = *nbComparaison + 1;
@@ -315,7 +313,7 @@ void tri_rapide(tableau tab, int debut, int fin, int ordre, unsigned long *nbCom
             else
             {
                 // Approche jusqu'au pivot
-                while (tab[i] >= tab[pivot] && i < fin)
+                while (i < fin && tab[i] >= tab[pivot])
                 {
                     i = i + 1;
                     *nbComparaison = *nbComparaison + 1;
@@ -354,7 +352,7 @@ void tri_insertion(tableau t, int ordre, unsigned long *nbComparaison, unsigned 
         // Ordre croissant
         if ((ordre == 0) && (t[i] < t[i - 1]))
         {
-            while (t[j] < t[j - 1] && (j != 0))
+            while ((j != 0) && t[j] < t[j - 1])
             {
                 temp = t[j - 1];
                 t[j - 1] = t[j];
@@ -368,7 +366,7 @@ void tri_insertion(tableau t, int ordre, unsigned long *nbComparaison, unsigned 
         // Ordre décroissant
         else if ((ordre == 1) && (t[i - 1] < t[i]))
         {
-            while (t[j - 1] < t[j] && (j != 0))
+            while ((j != 0) && t[j - 1] < t[j])
             {
                 temp = t[j];
                 t[j] = t[j - 1];
