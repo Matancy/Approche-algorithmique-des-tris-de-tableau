@@ -52,7 +52,7 @@ int main()
     /**************************************
                 TRI INSERTION
      **************************************/
-    printf("\n\n\tTRI PAR INSERTION - Cas normal - Desordre => Croissant\n\n");
+    printf("\n\tTRI PAR INSERTION - Cas normal - Desordre => Croissant\n");
 
     clock_t begin = clock(); // Enregistrement de l'heure de début
     tri_insertion(tabnormal1, 0, &nbComparaison, &nbPermutation);
@@ -65,7 +65,7 @@ int main()
     nbComparaison = 0;
     nbPermutation = 0;
 
-    printf("\n\n\tTRI PAR INSERTION - Cas favorable - Croissant => Croissant\n\n");
+    printf("\n\tTRI PAR INSERTION - Cas favorable - Croissant => Croissant\n");
 
     begin = clock(); // Enregistrement de l'heure de début
     tri_insertion(tabfavorable1, 0, &nbComparaison, &nbPermutation);
@@ -78,7 +78,7 @@ int main()
     nbComparaison = 0;
     nbPermutation = 0;
 
-    printf("\n\n\tTRI PAR INSERTION - Cas défavorable - Decroissant => Croissant\n\n");
+    printf("\n\tTRI PAR INSERTION - Cas defavorable - Decroissant => Croissant\n");
 
     begin = clock(); // Enregistrement de l'heure de début
     tri_insertion(tabdefavorable1, 0, &nbComparaison, &nbPermutation);
@@ -94,7 +94,7 @@ int main()
     /**************************************
                 TRI SHAKER
      **************************************/
-    printf("\n\n\tTRI SHAKER - Cas normal - Desordre => Croissant\n\n");
+    printf("\n\tTRI SHAKER - Cas normal - Desordre => Croissant\n");
 
     begin = clock(); // Enregistrement de l'heure de début
     tri_shaker(tabnormal2, 0, &nbComparaison, &nbPermutation);
@@ -107,7 +107,7 @@ int main()
     nbComparaison = 0;
     nbPermutation = 0;
 
-    printf("\n\n\tTRI SHAKER - Cas favorable - Croissant => Croissant\n\n");
+    printf("\n\tTRI SHAKER - Cas favorable - Croissant => Croissant\n");
 
     begin = clock(); // Enregistrement de l'heure de début
     tri_shaker(tabfavorable2, 0, &nbComparaison, &nbPermutation);
@@ -120,7 +120,7 @@ int main()
     nbComparaison = 0;
     nbPermutation = 0;
 
-    printf("\n\n\tTRI SHAKER - Cas defavorable - Decroissant => Croissant\n\n");
+    printf("\n\tTRI SHAKER - Cas defavorable - Decroissant => Croissant\n");
 
     begin = clock(); // Enregistrement de l'heure de début
     tri_shaker(tabnormal2, 1, &nbComparaison, &nbPermutation);
@@ -136,7 +136,7 @@ int main()
     /**************************************
                 TRI RAPIDE    
      **************************************/
-    printf("\n\n\tTRI RAPIDE - Cas normal - Desordre => Croissant\n\n");
+    printf("\n\tTRI RAPIDE - Cas normal - Desordre => Croissant\n");
 
     begin = clock(); // Enregistrement de l'heure de début
     tri_rapide(tabnormal3, 0, MAX, 0, &nbComparaison, &nbPermutation);
@@ -149,7 +149,7 @@ int main()
     nbComparaison = 0;
     nbPermutation = 0;
 
-    printf("\n\n\tTRI RAPIDE - Cas favorable - Croissant => Croissant\n\n");
+    printf("\n\tTRI RAPIDE - Cas favorable - Croissant => Croissant\n");
 
     begin = clock(); // Enregistrement de l'heure de début
     tri_rapide(tabfavorable3, 0, MAX, 0, &nbComparaison, &nbPermutation);
@@ -162,7 +162,7 @@ int main()
     nbComparaison = 0;
     nbPermutation = 0;
 
-    printf("\n\n\tTRI RAPIDE - Cas defavorable - Decroissant => Croissant\n\n");
+    printf("\n\tTRI RAPIDE - Cas defavorable - Decroissant => Croissant\n");
 
     begin = clock(); // Enregistrement de l'heure de début
     tri_rapide(tabdefavorable3, 0, MAX, 0, &nbComparaison, &nbPermutation);
