@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <time.h>
 #define MAX 17000 // Nombre d'entiers à génerer
+// Nombre d'entiers max avant que le programme plante : 17 000 
 
 typedef int tableau[MAX];
 
