@@ -4,8 +4,7 @@
 #include <string.h>
 
 #define MAX_COVID 17776 // Nombre de valeurs du tableau covid
-#define MAX_JOURS 31    // Nombre de valeurs du tableau tableau intermédiaire
-#define MAX_CLASSE 99   // Nombre de valeurs du tableau tableau intermédiaire
+#define MAX_CLASSE 99   // Nombre de valeurs du tableau de classes
 typedef char chaine11[11];
 
 typedef struct
