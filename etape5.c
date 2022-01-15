@@ -7,17 +7,17 @@
 #define MAX_JOURS 31    // Nombre de valeurs du tableau tableau intermédiaire
 typedef char chaine11[11];
 
-typedef struct{
-    int dep;  
+typedef struct
+{
+    int dep;
     chaine11 date;
     int pos;
     int classe;
     int pop;
 } covid;
 
-typedef covid typeCovid[MAX_COVID]; 
+typedef covid typeCovid[MAX_COVID];
 typedef covid typeIntermediaire[MAX_JOURS];
-
 
 void lireFichier(typeCovid, int *);
 void triDepartement(typeCovid);
@@ -38,14 +38,14 @@ int main()
     population22(tabCovid, &nbHab22);
     triDate(tabCovid);
     DebutAnnee35(tabCovid, tabIntermediaire);
-    return EXIT_SUCCESS;   
+    return EXIT_SUCCESS;
 }
 
 // Lire un fichier
 void lireFichier(typeCovid tabCovid, int *nbEnregistrements)
 {
-    FILE* donnees;
-    donnees = fopen ("DonneesCovid.data","rb");
+    FILE *donnees;
+    donnees = fopen("DonneesCovid.data.data", "rb");
     fread(&tabCovid[*nbEnregistrements], sizeof(covid), 1, donnees);
     *nbEnregistrements = *nbEnregistrements + 1;
     while (!feof(donnees))
@@ -89,70 +89,74 @@ void DebutAnnee35(typeCovid tabCovid, typeIntermediaire tabIntermediaire)
     bool janvier = false; // Vrai quand on a trouvé le 01/01/2021
     int nbCas = 0;
     int i = 0; // Premier compteur
-    int j; // Deuxième compteur
+    int j;     // Deuxième compteur
 
     // Enregistrement des données du mois de janvier en Ille-et-Vilaine dans un tableau intermédiaire
-    printf("Nombre de cas en Ille-et-Vilaine par classe d'âge, le 1er janvier 2021\n\n");  
-    while (janvier)
+    printf("Nombre de cas en Ille-et-Vilaine par classe d'âge, le 1er janvier 2021\n\n");
+    if (strcmp(tabCovid[i].date, "2021-01-01") == 0)
     {
-        if (strcmp(tabCovid[i].date, "2021-01-01") == 0)
+        printf("Bonjour ! \n");
+        janvier = true;
+        j = i;
+        for (j = 0; j < MAX_JOURS; j++)
         {
-            printf("Bonjour ! \n");
-            janvier = true;
-            j = i;
-            for (j = 0; j < MAX_JOURS; j++)
+            if (tabCovid[j].dep == 35)
             {
-                if (tabCovid[j].dep == 35)
-                {
-                    tabIntermediaire[j] = tabCovid[j];
-                    nbCas = nbCas + tabCovid[j].pos;
-                }                    
+                tabIntermediaire[j] = tabCovid[j];
+                nbCas = nbCas + tabCovid[j].pos;
             }
         }
-        i++;
     }
+    i++;
 
-    // Affichage des données du mois de janvier en Ille-et-Vialine par trabche d'âge
-    for (i = 0; i < MAX_JOURS; i++)
+    // Si le 1er janvier contient des valeurs
+    if (janvier)
     {
-        switch (tabIntermediaire[i].classe)
+        // Affichage des données du mois de janvier en Ille-et-Vialine par trabche d'âge
+        for (i = 0; i < MAX_JOURS; i++)
         {
-                    case(9):
-                        printf("[0 - 9] : %d" ,tabIntermediaire[i].pos);
-                    break;
-                    case(19):
-                        printf("[10 - 19] : %d" ,tabIntermediaire[i].pos);
-                    break;
-                    case(29):
-                        printf("[20 - 29] : %d" ,tabIntermediaire[i].pos);
-                    break;
-                    case(39):
-                        printf("[30 - 39] : %d" ,tabIntermediaire[i].pos);
-                    break;
-                    case(49):
-                        printf("[40 - 49] : %d" ,tabIntermediaire[i].pos);
-                    break;
-                    case(59):
-                        printf("[50 - 59] : %d" ,tabIntermediaire[i].pos);
-                    break;
-                    case(69):
-                        printf("[60 - 69] : %d" ,tabIntermediaire[i].pos);
-                    break;
-                    case(79):
-                        printf("[70 - 79] : %d" ,tabIntermediaire[i].pos);
-                    break;
-                    case(89):
-                        printf("[80 - 89] : %d" ,tabIntermediaire[i].pos);
-                    break;
-                    case(99):
-                        printf("[90 - 99] : %d" ,tabIntermediaire[i].pos);
-                        nbCas = nbCas + tabCovid[i].pos;
-                    break;
+            switch (tabIntermediaire[i].classe)
+            {
+            case (9):
+                printf("[0 - 9] : %d", tabIntermediaire[i].pos);
+                break;
+            case (19):
+                printf("[10 - 19] : %d", tabIntermediaire[i].pos);
+                break;
+            case (29):
+                printf("[20 - 29] : %d", tabIntermediaire[i].pos);
+                break;
+            case (39):
+                printf("[30 - 39] : %d", tabIntermediaire[i].pos);
+                break;
+            case (49):
+                printf("[40 - 49] : %d", tabIntermediaire[i].pos);
+                break;
+            case (59):
+                printf("[50 - 59] : %d", tabIntermediaire[i].pos);
+                break;
+            case (69):
+                printf("[60 - 69] : %d", tabIntermediaire[i].pos);
+                break;
+            case (79):
+                printf("[70 - 79] : %d", tabIntermediaire[i].pos);
+                break;
+            case (89):
+                printf("[80 - 89] : %d", tabIntermediaire[i].pos);
+                break;
+            case (99):
+                printf("[90 - 99] : %d", tabIntermediaire[i].pos);
+                nbCas = nbCas + tabCovid[i].pos;
+                break;
+            }
+            printf("\n\nTOTAL: %d", nbCas);
         }
     }
-    printf("\n\nTOTAL: %d" ,nbCas);
+    else
+    {
+        printf("Aucune valeur covid pour le 1er Janvier\n");
+    }
 }
-
 
 // Tri rapide
 void tri_rapide(typeCovid tabCovid, int debut, int fin, int champ)
@@ -165,34 +169,34 @@ void tri_rapide(typeCovid tabCovid, int debut, int fin, int champ)
         j = fin;
         while (i < j)
         {
-                // Tri sur le département
-                if (champ == 0)
+            // Tri sur le département
+            if (champ == 0)
+            {
+                // Approche jusqu'au pivot
+                while ((tabCovid[i].dep <= tabCovid[pivot].dep) && (i < fin))
                 {
-                    // Approche jusqu'au pivot
-                    while ((tabCovid[i].dep <= tabCovid[pivot].dep) && (i < fin))
-                    {
-                        i = i + 1;
-                    }
-                    // Approche juste avant le pivot
-                    while (tabCovid[j].dep > tabCovid[pivot].dep)
-                    {
-                        j = j - 1;
-                    }
+                    i = i + 1;
                 }
-                // Tri sur la date
-                else if (champ == 1)
+                // Approche juste avant le pivot
+                while (tabCovid[j].dep > tabCovid[pivot].dep)
                 {
-                    // Approche jusqu'au pivot
-                    while ((tabCovid[i].date <= tabCovid[pivot].date) && (i < fin))
-                    {
-                        i = i + 1;
-                    }
-                    // Approche juste avant le pivot
-                    while (tabCovid[j].dep > tabCovid[pivot].dep)
-                    {
-                        j = j - 1;
-                    }
+                    j = j - 1;
                 }
+            }
+            // Tri sur la date
+            else if (champ == 1)
+            {
+                // Approche jusqu'au pivot
+                while ((tabCovid[i].date <= tabCovid[pivot].date) && (i < fin))
+                {
+                    i = i + 1;
+                }
+                // Approche juste avant le pivot
+                while (tabCovid[j].date > tabCovid[pivot].date)
+                {
+                    j = j - 1;
+                }
+            }
 
             if (i < j)
             {
@@ -225,7 +229,7 @@ void tri_rapide(typeCovid tabCovid, int debut, int fin, int champ)
 // Inversion de deux valeurs
 void inversion(typeCovid tab, int val1, int val2, int champ)
 {
-    int tmpDep; // Variable d'échange pour le département
+    int tmpDep;       // Variable d'échange pour le département
     chaine11 tmpDate; // Variable d'échange pour la date
     // Inversion selon le département
     if (champ == 0)
