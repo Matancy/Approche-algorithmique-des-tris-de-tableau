@@ -60,7 +60,6 @@ void lireFichier(typeCovid tabCovid, int *nbEnregistrements)
 // Trier du tableau sur le departement
 void triDepartement(typeCovid tabCovid)
 {
-    printf("Je commence le tri departement!\n\n");
     tri_rapide(tabCovid, 0, MAX_COVID, 0); // Tri seleon le département
 }
 
@@ -80,7 +79,6 @@ void population22(typeCovid tabCovid, int *nbHab22)
 // Tri du tableau sur la date
 void triDate(typeCovid tabCovid)
 {
-    printf("Je commence le tri date !\n\n");
     tri_rapide(tabCovid, 0, MAX_COVID, 1); // Tri selon le département
 }
 
@@ -110,14 +108,18 @@ void DebutAnnee35(typeCovid tabCovid, typePosClasse tabPosClasse)
         // Vérification de la date du 1er Janvier
         if (strcmp(tabCovid[j].date, "2021-01-01") == 0)
         {
-            // Vérification du département 
+            // Vérification du département
             if (tabCovid[j].dep == 35)
             {
                 // Enregistrement des données
                 janvier = true; // Le 1er janvier contient des valeurs désormais
                 // printf("Classe : %d Pos : %d \n", tabCovid->classe, tabCovid->pos);
                 tabPosClasse[tabCovid[j].classe] = tabCovid[j].pos; // Cas pour la tranche d'âge
-                nbCas = nbCas + tabCovid[j].pos; // Total de cas
+                // Pour ne pas prendre en compte la classe 0 est qui est un résumé
+                if (tabCovid[j].classe != 0)
+                {
+                    nbCas = nbCas + tabCovid[j].pos; // Total de cas
+                }
             }
         }
     }
