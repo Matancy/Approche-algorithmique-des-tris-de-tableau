@@ -5,6 +5,7 @@
 
 #define MAX_COVID 17776 // Nombre de valeurs du tableau covid
 #define MAX_JOURS 31    // Nombre de valeurs du tableau tableau intermédiaire
+#define MAX_CLASSE 99   // Nombre de valeurs du tableau tableau intermédiaire
 typedef char chaine11[11];
 
 typedef struct
@@ -17,20 +18,20 @@ typedef struct
 } covid;
 
 typedef covid typeCovid[MAX_COVID];
-typedef covid typeIntermediaire[MAX_JOURS];
+typedef int typePosClasse[MAX_CLASSE];
 
 void lireFichier(typeCovid, int *);
 void triDepartement(typeCovid);
 void population22(typeCovid, int *);
 void triDate(typeCovid);
-void DebutAnnee35(typeCovid, typeIntermediaire);
+void DebutAnnee35(typeCovid, typePosClasse);
 void tri_rapide(typeCovid, int, int, int);
 void inversion(typeCovid, int, int, int);
 
 int main()
 {
     typeCovid tabCovid;
-    typeIntermediaire tabIntermediaire;
+    typePosClasse tabIntermediaire;
     int nbEnregistrements = 0; // Nombre d'enregistrements dans le tableau tabCovid
     int nbHab22 = 0;           // Nombre d'habitants des Côtes d'Armor
     lireFichier(tabCovid, &nbEnregistrements);
@@ -84,73 +85,58 @@ void triDate(typeCovid tabCovid)
 }
 
 // Affichage des données par tranche d'âge en Ille-et-Vilaine le 1er janvier 2021
-void DebutAnnee35(typeCovid tabCovid, typeIntermediaire tabIntermediaire)
+void DebutAnnee35(typeCovid tabCovid, typePosClasse tabPosClasse)
 {
-    bool janvier = false; // Vrai quand on a trouvé le 01/01/2021
-    int nbCas = 0;
-    int i = 0; // Premier compteur
-    int j;     // Deuxième compteur
+    bool janvier = false; // Si on trouve des valeurs du 1er Janvier
+    int nbCas = 0;        // Compteur du nombre de cas au total
 
-    // Enregistrement des données du mois de janvier en Ille-et-Vilaine dans un tableau intermédiaire
-    printf("Nombre de cas en Ille-et-Vilaine par classe d'âge, le 1er janvier 2021\n\n");
-    if (strcmp(tabCovid[i].date, "2021-01-01") == 0)
+    // Initialisation du tableau des classes
+    tabPosClasse[9] = 0;
+    tabPosClasse[19] = 0;
+    tabPosClasse[29] = 0;
+    tabPosClasse[39] = 0;
+    tabPosClasse[49] = 0;
+    tabPosClasse[59] = 0;
+    tabPosClasse[69] = 0;
+    tabPosClasse[79] = 0;
+    tabPosClasse[89] = 0;
+    tabPosClasse[90] = 0;
+
+    // Enregistrement des données du 1er Janvier en Ille-et-Vilaine dans un tableau intermédiaire
+    printf("Nombre de cas en Ille-et-Vilaine par classe d'age, le 1er janvier 2021 : \n\n");
+    for (int j = 0; j < MAX_COVID; j++)
     {
-        printf("Bonjour ! \n");
-        janvier = true;
-        j = i;
-        for (j = 0; j < MAX_JOURS; j++)
+        // printf("Date : %s Dep : %d Classe : %d Pos : %d\n", tabCovid->date, tabCovid->dep, tabCovid->classe, tabCovid->pos);
+        // Vérification de la date du 1er Janvier
+        if (strcmp(tabCovid[j].date, "2021-01-01") == 0)
         {
+            // Vérification du département 
             if (tabCovid[j].dep == 35)
             {
-                tabIntermediaire[j] = tabCovid[j];
-                nbCas = nbCas + tabCovid[j].pos;
+                // Enregistrement des données
+                janvier = true; // Le 1er janvier contient des valeurs désormais
+                // printf("Classe : %d Pos : %d \n", tabCovid->classe, tabCovid->pos);
+                tabPosClasse[tabCovid[j].classe] = tabCovid[j].pos; // Cas pour la tranche d'âge
+                nbCas = nbCas + tabCovid[j].pos; // Total de cas
             }
         }
     }
-    i++;
 
     // Si le 1er janvier contient des valeurs
     if (janvier)
     {
-        // Affichage des données du mois de janvier en Ille-et-Vialine par trabche d'âge
-        for (i = 0; i < MAX_JOURS; i++)
-        {
-            switch (tabIntermediaire[i].classe)
-            {
-            case (9):
-                printf("[0 - 9] : %d", tabIntermediaire[i].pos);
-                break;
-            case (19):
-                printf("[10 - 19] : %d", tabIntermediaire[i].pos);
-                break;
-            case (29):
-                printf("[20 - 29] : %d", tabIntermediaire[i].pos);
-                break;
-            case (39):
-                printf("[30 - 39] : %d", tabIntermediaire[i].pos);
-                break;
-            case (49):
-                printf("[40 - 49] : %d", tabIntermediaire[i].pos);
-                break;
-            case (59):
-                printf("[50 - 59] : %d", tabIntermediaire[i].pos);
-                break;
-            case (69):
-                printf("[60 - 69] : %d", tabIntermediaire[i].pos);
-                break;
-            case (79):
-                printf("[70 - 79] : %d", tabIntermediaire[i].pos);
-                break;
-            case (89):
-                printf("[80 - 89] : %d", tabIntermediaire[i].pos);
-                break;
-            case (99):
-                printf("[90 - 99] : %d", tabIntermediaire[i].pos);
-                nbCas = nbCas + tabCovid[i].pos;
-                break;
-            }
-            printf("\n\nTOTAL: %d", nbCas);
-        }
+        // Affichage des données du 1er Janvier en Ille-et-Vialine par tranche d'âge
+        printf("[0 - 9] : %d\n", tabPosClasse[9]);
+        printf("[10 - 19] : %d\n", tabPosClasse[19]);
+        printf("[20 - 29] : %d\n", tabPosClasse[29]);
+        printf("[30 - 39] : %d\n", tabPosClasse[39]);
+        printf("[40 - 49] : %d\n", tabPosClasse[49]);
+        printf("[50 - 59] : %d\n", tabPosClasse[59]);
+        printf("[60 - 69] : %d\n", tabPosClasse[69]);
+        printf("[70 - 79] : %d\n", tabPosClasse[79]);
+        printf("[80 - 89] : %d\n", tabPosClasse[89]);
+        printf("[90 - 99] : %d\n", tabPosClasse[90]);
+        printf("\n\nTOTAL: %d\n", nbCas);
     }
     else
     {
